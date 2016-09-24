@@ -184,9 +184,9 @@
 				<enabled>false</enabled>
 			</snapshots>
 			<!-- v3 -->
-			<!-- <id>maven-public</id>
+			<id>maven-public</id>
 			<name>maven-public</name>
-			<url>http://localhost:8081/repository/maven-public/</url> -->
+			<url>http://localhost:8081/repository/maven-public/</url>
 			
 			<!-- v2 -->
 			<!-- <id>public</id>
@@ -194,9 +194,9 @@
 			<url>http://localhost:8081/nexus/content/groups/public/</url> -->
 			
 			<!-- 中央服务器 -->
-			<id>central</id>
+			<!-- <id>central</id>
 			<name>Central Repository</name>
-			<url>http://repo.maven.apache.org/maven2</url>
+			<url>http://repo.maven.apache.org/maven2</url> -->
 			<layout>default</layout>
 		</repository>
 	</repositories>
@@ -206,9 +206,9 @@
 				<updatePolicy>never</updatePolicy>
 			</releases>
 			<!-- v3 -->
-			<!-- <id>maven-public</id>
+			<id>maven-public</id>
 			<name>maven-public</name>
-			<url>http://localhost:8081/repository/maven-public/</url> -->
+			<url>http://localhost:8081/repository/maven-public/</url>
 			
 			<!-- v2 -->
 			<!-- <id>public</id>
@@ -216,9 +216,9 @@
 			<url>http://localhost:8081/nexus/content/groups/public/</url> -->
 			
 			<!-- 中央服务器 -->
-			<id>central</id>
+			<!-- <id>central</id>
 			<name>Central Repository</name>
-			<url>http://repo.maven.apache.org/maven2</url>
+			<url>http://repo.maven.apache.org/maven2</url> -->
 			<layout>default</layout>
 			<snapshots>
 				<enabled>false</enabled>
