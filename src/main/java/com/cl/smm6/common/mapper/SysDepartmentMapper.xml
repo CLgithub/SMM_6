@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.cl.smm6.common.mapper.SysDepartmentMapper" >
+  <resultMap id="BaseResultMap" type="com.cl.smm6.common.entity.SysDepartment" >
+    <id column="depcode" property="depcode" jdbcType="INTEGER" />
+    <result column="depname" property="depname" jdbcType="VARCHAR" />
+    <result column="parentCode" property="parentcode" jdbcType="INTEGER" />
+    <result column="status" property="status" jdbcType="INTEGER" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    depcode, depname, parentCode, status
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from sys_department
+    where depcode = #{depcode,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from sys_department
+    where depcode = #{depcode,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.cl.smm6.common.entity.SysDepartment" >
+    insert into sys_department (depcode, depname, parentCode, 
+      status)
+    values (#{depcode,jdbcType=INTEGER}, #{depname,jdbcType=VARCHAR}, #{parentcode,jdbcType=INTEGER}, 
+      #{status,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" parameterType="com.cl.smm6.common.entity.SysDepartment" >
+    insert into sys_department
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="depcode != null" >
+        depcode,
+      </if>
+      <if test="depname != null" >
+        depname,
+      </if>
+      <if test="parentcode != null" >
+        parentCode,
+      </if>
+      <if test="status != null" >
+        status,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="depcode != null" >
+        #{depcode,jdbcType=INTEGER},
+      </if>
+      <if test="depname != null" >
+        #{depname,jdbcType=VARCHAR},
+      </if>
+      <if test="parentcode != null" >
+        #{parentcode,jdbcType=INTEGER},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.cl.smm6.common.entity.SysDepartment" >
+    update sys_department
+    <set >
+      <if test="depname != null" >
+        depname = #{depname,jdbcType=VARCHAR},
+      </if>
+      <if test="parentcode != null" >
+        parentCode = #{parentcode,jdbcType=INTEGER},
+      </if>
+      <if test="status != null" >
+        status = #{status,jdbcType=INTEGER},
+      </if>
+    </set>
+    where depcode = #{depcode,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.cl.smm6.common.entity.SysDepartment" >
+    update sys_department
+    set depname = #{depname,jdbcType=VARCHAR},
+      parentCode = #{parentcode,jdbcType=INTEGER},
+      status = #{status,jdbcType=INTEGER}
+    where depcode = #{depcode,jdbcType=INTEGER}
+  </update>
+</mapper>

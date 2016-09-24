@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" 
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:tx="http://www.springframework.org/schema/tx" 
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xsi:schemaLocation="
+	http://www.springframework.org/schema/beans
+	http://www.springframework.org/schema/beans/spring-beans-4.3.xsd
+	http://www.springframework.org/schema/context
+	http://www.springframework.org/schema/context/spring-context-4.3.xsd
+	http://www.springframework.org/schema/tx
+	http://www.springframework.org/schema/tx/spring-tx-4.3.xsd
+	http://www.springframework.org/schema/aop
+	http://www.springframework.org/schema/aop/spring-aop-4.3.xsd
+	">
+
+	<!-- 只扫描@Service和listener @Repository为mybatis的mapper接口，单独处理，@Controller叫给springMVC扫描 -->
+	<context:component-scan base-package="com.cl.smm6.*.serviceimpl,com.cl.smm6.common.listener,test" />
+	
+	<!-- 配置通过注释方式注入 -->
+	<context:annotation-config />
+	
+	
+	<!-- 引入jdbc配置文件 -->
+	<context:property-placeholder location="classpath:jdbc.properties"/>
+	<!--配置数据源 -->
+	<bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource" >
+		<property name="driverClass" value="${jdbc.driver}" />
+		<property name="jdbcUrl" value="${jdbc.url}" />
+		<property name="user" value="${jdbc.username}" />
+		<property name="password" value="${jdbc.password}" />
+	</bean>
+	
+	<!-- 配置SqlSessionFactory，同时指定数据源 -->
+	<bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+		<property name="dataSource" ref="dataSource" />
+	</bean>
+	<!-- Mapper接口所在包名，Spring会自动查找其下的Mapper -->
+	<bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+		<property name="basePackage" value="com.cl.smm6.common.mapper" />
+	</bean>
+	
+	<!-- springJDBC数据连接 -->
+	<bean id="jdbcTemplate" class="org.springframework.jdbc.core.JdbcTemplate">
+		<property name="dataSource" ref="dataSource" />
+	</bean>
+	
+	<!-- (事务管理器)transaction manager -->
+	<bean id="transactionManager"
+		class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+		<property name="dataSource" ref="dataSource" />
+	</bean>
+
+	<!-- 配置事务增强,也可以配置为注释方式 -->
+	<tx:advice id="txAdvice" transaction-manager="transactionManager">
+		<tx:attributes>
+			<!-- 写 -->
+			<tx:method name="save*" propagation="REQUIRED" isolation="DEFAULT" />
+			<tx:method name="update*" propagation="REQUIRED" isolation="DEFAULT" />
+			<tx:method name="delete*" propagation="REQUIRED" isolation="DEFAULT" />
+			<tx:method name="new*" propagation="REQUIRED" isolation="DEFAULT" />
+			<!-- 读 -->
+			<tx:method name="get*" propagation="REQUIRED" isolation="DEFAULT"
+				read-only="true" />
+			<tx:method name="load*" propagation="REQUIRED" isolation="DEFAULT"
+				read-only="true" />
+			<tx:method name="find*" propagation="REQUIRED" isolation="DEFAULT"
+				read-only="true" />
+			<!-- 通配 -->
+			<tx:method name="*" propagation="REQUIRED" isolation="DEFAULT" />
+		</tx:attributes>
+	</tx:advice>
+	
+	<!-- logger日志Bean -->
+	<bean id="logger" class="com.cl.smm6.system.controller.Logger" >
+		<property name="sysLogService" ref="sysLogServiceImpl"/>
+	</bean>
+
+	<!-- aop配置  -->
+	<aop:config>
+		<!--事务切入点 -->
+		<aop:pointcut expression="execution(* *..*Service.*(..))" id="txPointCut" />
+		<!-- 日志切入点 -->
+		<aop:pointcut expression="(execution(* *..*Service.save*(..))
+								or execution(* *..*Service.update*(..))
+								or execution(* *..*Service.delete*(..))
+								or execution(* *..*Service.batch*(..))
+								or execution(* *..*Service.set*(..))
+								or execution(* *..*Service.new*(..))) and !bean(sysLogService)" 
+					id="loggerPointcut"/> 
+		<!-- 织入事务切面 -->
+		<aop:advisor advice-ref="txAdvice" pointcut-ref="txPointCut" />
+		<!-- 织入日志切面 -->
+		<aop:aspect id="loggerAspect" ref="logger" order="0">
+			<aop:around method="record" pointcut-ref="loggerPointcut"/>
+		</aop:aspect>
+	</aop:config>
+
+</beans>

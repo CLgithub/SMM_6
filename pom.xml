@@ -1,0 +1,229 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>com.cl</groupId>
+	<artifactId>SMM_6</artifactId>
+	<packaging>war</packaging>
+	<version>0.0.1-SNAPSHOT</version>
+	<name>SMM_6 Maven Webapp</name>
+	<url>http://maven.apache.org</url>
+	
+	<properties>
+		<spring>4.3.2.RELEASE</spring>
+		<c3p0>0.9.5.2</c3p0>
+		<commons-logging-api>1.1</commons-logging-api>
+		<aspectjweaver>1.8.7</aspectjweaver>
+		<quartz>2.2.2</quartz>
+		<commons-collections>20040616</commons-collections>
+		<jackson-core>2.6.3</jackson-core>
+		<jackson-databind>2.6.3</jackson-databind>
+		<mybatis>3.3.0</mybatis>
+		<mybatis-spring>1.2.3</mybatis-spring>
+		<javax.servlet-api>4.0.0-b01</javax.servlet-api>
+		<org-apache-commons-dbcp>1.2.2-201002241055</org-apache-commons-dbcp>
+		<commons-fileupload>1.3.1</commons-fileupload>
+		<javax.servlet.jsp.jstl-api>1.2.1</javax.servlet.jsp.jstl-api>
+		<jackson-mapper-lgpl>1.2.1</jackson-mapper-lgpl>
+		<mybatis-generator-core>1.3.2</mybatis-generator-core>
+		<cxf-rt-frontend-jaxws>3.1.7</cxf-rt-frontend-jaxws>
+		<cxf-rt-transports-http-netty-client>3.1.7</cxf-rt-transports-http-netty-client>
+		<cxf-rt-transports-http-jetty>3.1.7</cxf-rt-transports-http-jetty>
+		<ehcache-core>3.1.1</ehcache-core>
+		<mysql-connector-java>5.1.34_1</mysql-connector-java>
+	</properties>
+
+	<dependencies>
+		<!-- spring核心包 -->
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-webmvc</artifactId>
+			<version>${spring}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-core</artifactId>
+			<version>${spring}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-tx</artifactId>
+			<version>${spring}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-jdbc</artifactId>
+			<version>${spring}</version>
+		</dependency>
+		
+		<!-- dbcp连接 -->
+		<dependency>
+			<groupId>com.mchange</groupId>
+			<artifactId>c3p0</artifactId>
+			<version>${c3p0}</version>
+		</dependency>
+		<dependency>
+			<groupId>commons-logging</groupId>
+			<artifactId>commons-logging-api</artifactId>
+			<version>${commons-logging-api}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.aspectj</groupId>
+			<artifactId>aspectjweaver</artifactId>
+			<version>${aspectjweaver}</version>
+		</dependency>
+		
+		<!-- mysql jdbc driber -->
+		<dependency>
+			<groupId>org.wisdom-framework</groupId>
+			<artifactId>mysql-connector-java</artifactId>
+			<version>${mysql-connector-java}</version>
+		</dependency>
+		
+		<!-- 石英同步包 -->
+		<dependency>
+			<groupId>org.quartz-scheduler</groupId>
+			<artifactId>quartz</artifactId>
+			<version>${quartz}</version>
+		</dependency>
+		<dependency>
+			<groupId>commons-collections</groupId>
+			<artifactId>commons-collections</artifactId>
+			<version>${commons-collections}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-context-support</artifactId>
+			<version>${spring}</version>
+		</dependency>
+		<dependency>
+			<groupId>com.fasterxml.jackson.core</groupId>
+			<artifactId>jackson-core</artifactId>
+			<version>${jackson-core}</version>
+		</dependency>
+		<dependency>
+			<groupId>com.fasterxml.jackson.core</groupId>
+			<artifactId>jackson-databind</artifactId>
+			<version>${jackson-databind}</version>
+		</dependency>
+		
+		<dependency>
+			<groupId>org.mybatis</groupId>
+			<artifactId>mybatis</artifactId>
+			<version>${mybatis}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.mybatis</groupId>
+			<artifactId>mybatis-spring</artifactId>
+			<version>${mybatis-spring}</version>
+		</dependency>
+		
+		<dependency>
+			<groupId>javax.servlet</groupId>
+			<artifactId>javax.servlet-api</artifactId>
+			<version>${javax.servlet-api}</version>
+		</dependency>
+		<dependency>
+			<groupId>com.kenai.nbpwr</groupId>
+			<artifactId>org-apache-commons-dbcp</artifactId>
+			<version>${org-apache-commons-dbcp}</version>
+		</dependency>
+		<dependency>
+			<groupId>commons-fileupload</groupId>
+			<artifactId>commons-fileupload</artifactId>
+			<version>${commons-fileupload}</version>
+		</dependency>
+		<dependency>
+			<groupId>javax.servlet.jsp.jstl</groupId>
+			<artifactId>javax.servlet.jsp.jstl-api</artifactId>
+			<version>${javax.servlet.jsp.jstl-api}</version>
+		</dependency>
+		
+		<dependency>
+			<groupId>org.codehaus.jackson</groupId>
+			<artifactId>jackson-mapper-lgpl</artifactId>
+			<version>${jackson-mapper-lgpl}</version>
+		</dependency>
+		
+		<!-- mybatis逆向工程包 -->
+		<dependency>
+			<groupId>org.mybatis.generator</groupId>
+			<artifactId>mybatis-generator-core</artifactId>
+			<version>${mybatis-generator-core}</version>
+		</dependency>
+		
+		<!-- webService框架cxf begin -->
+		<dependency>
+			<groupId>org.apache.cxf</groupId>
+			<artifactId>cxf-rt-frontend-jaxws</artifactId>
+			<version>${cxf-rt-frontend-jaxws}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.cxf</groupId>
+			<artifactId>cxf-rt-transports-http-netty-client</artifactId>
+			<version>${cxf-rt-transports-http-netty-client}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.cxf</groupId>
+			<artifactId>cxf-rt-transports-http-jetty</artifactId>
+			<version>${cxf-rt-transports-http-jetty}</version>
+		</dependency>
+		
+		<!-- ehcache -->
+		<dependency>
+			<groupId>org.ehcache.modules</groupId>
+			<artifactId>ehcache-core</artifactId>
+			<version>${ehcache-core}</version>
+		</dependency>
+	</dependencies>
+
+	<!-- 配置私服地址 -->
+	<!--maven的生命周期插件的下载地址 -->
+	<repositories>
+		<repository>
+			<snapshots>
+				<enabled>false</enabled>
+			</snapshots>
+			<!-- v3 -->
+			<!-- <id>maven-public</id>
+			<name>maven-public</name>
+			<url>http://localhost:8081/repository/maven-public/</url> -->
+			
+			<!-- v2 -->
+			<!-- <id>public</id>
+			<name>Public Repositories</name>
+			<url>http://localhost:8081/nexus/content/groups/public/</url> -->
+			
+			<!-- 中央服务器 -->
+			<id>central</id>
+			<name>Central Repository</name>
+			<url>http://repo.maven.apache.org/maven2</url>
+			<layout>default</layout>
+		</repository>
+	</repositories>
+	<pluginRepositories>
+		<pluginRepository>
+			<releases>
+				<updatePolicy>never</updatePolicy>
+			</releases>
+			<!-- v3 -->
+			<!-- <id>maven-public</id>
+			<name>maven-public</name>
+			<url>http://localhost:8081/repository/maven-public/</url> -->
+			
+			<!-- v2 -->
+			<!-- <id>public</id>
+			<name>Public Repositories</name>
+			<url>http://localhost:8081/nexus/content/groups/public/</url> -->
+			
+			<!-- 中央服务器 -->
+			<id>central</id>
+			<name>Central Repository</name>
+			<url>http://repo.maven.apache.org/maven2</url>
+			<layout>default</layout>
+			<snapshots>
+				<enabled>false</enabled>
+			</snapshots>
+		</pluginRepository>
+	</pluginRepositories>
+
+</project>
