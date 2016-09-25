@@ -114,4 +114,14 @@
       sysDepCode = #{sysdepcode,jdbcType=INTEGER}
     where id = #{id,jdbcType=INTEGER}
   </update>
+
+	<!-- 根据用户名和密码查询用户 -->
+	<select id="selectUListByLogin" resultType="com.cl.smm6.common.entity.SysUser">
+		select * from sys_user where loginName=#{loginName} and password=#{password}
+	</select>
+	
+	<!-- 根据用户id查询用户权限list1 -->
+	<select id="getRightByUserID" resultType="com.cl.smm6.common.entity.SysRights">
+		SELECT * from sys_rights WHERE id IN(SELECT rightID from sys_user_right WHERE userID=#{id})
+	</select>
 </mapper>

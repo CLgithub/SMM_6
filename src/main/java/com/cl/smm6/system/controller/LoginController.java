@@ -37,10 +37,8 @@ public class LoginController {
 	 */
 	@RequestMapping(value = "doLogin")
 	@ResponseBody
-	public Object doLogin(HttpServletRequest request, HttpServletResponse response) {
-		String loginName = request.getParameter("userName");
-		String password = request.getParameter("password");
-		SysUser sysUser = sysUserService.doLogin(loginName, password);
+	public Object doLogin(String userName,String password,HttpServletRequest request) {
+		SysUser sysUser = sysUserService.doLogin(userName, password);
 		if (sysUser == null) {
 			return false;
 		} else {

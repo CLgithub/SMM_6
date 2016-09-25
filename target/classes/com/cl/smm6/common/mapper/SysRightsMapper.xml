@@ -114,4 +114,9 @@
       common = #{common,jdbcType=BIT}
     where id = #{id,jdbcType=INTEGER}
   </update>
+
+	<!-- 得到最大权限位 -->
+	<select id="getMaxRigthPos" resultType="java.lang.Integer">
+		select max(rightpos) from sys_rights;
+	</select>
 </mapper>

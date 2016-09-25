@@ -8,7 +8,9 @@ import javax.annotation.Resource;
 
 import org.springframework.stereotype.Service;
 
+import com.cl.smm6.common.entity.SysRights;
 import com.cl.smm6.common.entity.SysUser;
+import com.cl.smm6.common.mapper.SysUserMapper;
 import com.cl.smm6.common.mapperbase.BaseMapper;
 import com.cl.smm6.common.servicebase.BaseServiceImpl;
 import com.cl.smm6.common.uitl.Constant;
@@ -17,6 +19,7 @@ import com.cl.smm6.common.uitl.PageBean;
 import com.cl.smm6.common.uitl.ValidateUtil;
 import com.cl.smm6.system.service.SysRightsService;
 import com.cl.smm6.system.service.SysUserService;
+import com.fasterxml.jackson.databind.annotation.JsonTypeIdResolver;
 
 @Service
 public class SysUserServiceImpl extends BaseServiceImpl<SysUser> implements SysUserService {
@@ -26,6 +29,9 @@ public class SysUserServiceImpl extends BaseServiceImpl<SysUser> implements SysU
 		super.setBaseMapper(baseMapper);
 	}
 
+	@Resource
+	private SysUserMapper sysUserMapper; 
+	
 	@Resource
 	private SysRightsService sysRightsService;
 
@@ -44,10 +50,9 @@ public class SysUserServiceImpl extends BaseServiceImpl<SysUser> implements SysU
 	}
 
 	@Override
-	public SysUser doLogin(String userName, String password) {
+	public SysUser doLogin(String loginName, String password) {
 		// 得到用户
-		String sql = "select * from sys_user where loginName=? and password=?";
-		List<SysUser> list = this.selectListTBySql(sql, userName, password);
+		List<SysUser> list=sysUserMapper.selectUListByLogin(loginName,password);
 		// 如果用户名密码正确
 		if (ValidateUtil.isValid(list)) {
 			int pos = 0;
@@ -56,12 +61,11 @@ public class SysUserServiceImpl extends BaseServiceImpl<SysUser> implements SysU
 			int maxRightPos = sysRightsService.getMaxRightPos();
 			long[] rightSum = new long[maxRightPos + 1];
 			SysUser sysUser = list.get(0);
-			String sql2 = "SELECT * from sys_rights WHERE id IN(SELECT rightID from sys_user_right WHERE userID=?)";
-			List<HashMap<String, Object>> list2 = this.selectListMapBySql(sql2, sysUser.getId());
-			for (HashMap<String, Object> map : list2) {
+			List<SysRights> list2=sysUserMapper.getRightByUserID(sysUser.getId());
+			for (SysRights sysRight : list2) {
 				// 计算改用户的权限总和
-				pos = (Integer) map.get("rightpos");
-				code = (Long) map.get("rightcode");
+				pos = sysRight.getRightpos();
+				code = sysRight.getRightcode();
 				rightSum[pos] = rightSum[pos] | code;
 			}
 			sysUser.setRightSum(rightSum);
@@ -69,7 +73,6 @@ public class SysUserServiceImpl extends BaseServiceImpl<SysUser> implements SysU
 		} else {
 			return null;
 		}
-
 	}
 
 	@Override

@@ -9,6 +9,7 @@ import javax.annotation.Resource;
 import org.springframework.stereotype.Service;
 
 import com.cl.smm6.common.entity.SysRights;
+import com.cl.smm6.common.mapper.SysRightsMapper;
 import com.cl.smm6.common.mapperbase.BaseMapper;
 import com.cl.smm6.common.servicebase.BaseServiceImpl;
 import com.cl.smm6.common.uitl.Constant;
@@ -26,6 +27,9 @@ public class SysRightsServiceImpl extends BaseServiceImpl<SysRights> implements 
 	}
 	
 	@Resource
+	private SysRightsMapper sysRightsMapper;
+	
+	@Resource
 	private SysUserService sysUserService;
 
 	@Override
@@ -35,13 +39,7 @@ public class SysRightsServiceImpl extends BaseServiceImpl<SysRights> implements 
 
 	@Override
 	public int getMaxRightPos() {
-		String sql = "SELECT MAX(rightpos) AS maxPos from sys_rights";
-		List<HashMap<String, Object>> list = this.selectListMapBySql(sql);
-		if (ValidateUtil.isValid(list)) {
-			return (int) list.get(0).get("maxPos");
-		} else {
-			return 0;
-		}
+		return sysRightsMapper.getMaxRigthPos();
 	}
 
 	@Override

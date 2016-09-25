@@ -26,11 +26,11 @@ public interface SysUserService extends BaseService<SysUser> {
 	 * 
 	 * @author L
 	 * @date 2015-11-20
-	 * @param userName 用户名
+	 * @param loginName 登录名
 	 * @param password 密码
 	 * @return
 	 */
-	public SysUser doLogin(String userName, String password);
+	public SysUser doLogin(String loginName, String password);
 
 	/**
 	 * 新增或修改用户,id=0为新增,否则为修改

@@ -90,4 +90,41 @@
       status = #{status,jdbcType=INTEGER}
     where id = #{id,jdbcType=INTEGER}
   </update>
+  
+	<!-- 根据用户id得到其菜单id -->
+	<select id="getMidByUid" resultType="java.lang.Integer">
+		SELECT sm.id AS smid 
+		FROM sys_menu sm JOIN sys_menu_right smr JOIN sys_user_right sur 
+			ON sm.id=smr.menuID and smr.rightID=sur.rightID 
+		WHERE sur.userID=#{userId}
+	</select>
+	
+	<sql id="getMidBuidSql">
+		SELECT sm.id AS smid 
+		FROM sys_menu sm JOIN sys_menu_right smr JOIN sys_user_right sur 
+			ON sm.id=smr.menuID and smr.rightID=sur.rightID 
+		WHERE sur.userID=#{userId}
+	</sql>
+	<resultMap id="BaseResultMap_2" type="java.util.Map" >
+		<id column="id" property="id" jdbcType="INTEGER" />
+		<result column="menuName" property="menuname" jdbcType="VARCHAR" />
+		<result column="menuUrl" property="menuurl" jdbcType="VARCHAR" />
+		<result column="parentID" property="_parentId" jdbcType="INTEGER" />
+		<result column="status" property="status" jdbcType="INTEGER" />
+	</resultMap>
+	<select id="loadUserMenu" resultMap="BaseResultMap_2" >
+		 select id as id, menuName as menuname, menuUrl as menuurl, parentID as _parentId, status as status 
+		 from sys_menu 
+		 <where>
+		 	and id in (<include refid="getMidBuidSql" />)
+		 	or id in(
+		 		select distinct parentID 
+			 	from sys_menu 
+	 			<where>
+	 				and id in (<include refid="getMidBuidSql" />)
+	 			</where>
+		 	)
+		 </where>
+		
+	</select>
 </mapper>

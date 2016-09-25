@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 import com.cl.smm6.common.entity.SysMenu;
 import com.cl.smm6.common.entity.SysUser;
+import com.cl.smm6.common.mapper.SysMenuMapper;
 import com.cl.smm6.common.mapperbase.BaseMapper;
 import com.cl.smm6.common.servicebase.BaseServiceImpl;
 import com.cl.smm6.common.uitl.Constant;
@@ -24,11 +25,16 @@ public class SysMenuServiceImpl extends BaseServiceImpl<SysMenu> implements SysM
 	public void setBaseMapper(BaseMapper<SysMenu> baseMapper) {
 		super.setBaseMapper(baseMapper);
 	}
+	
+	@Resource
+	private SysMenuMapper sysMenuMapper;
 
 	@Override
 	public PageBean loadUserMenu(SysUser sysUser) {
-		String sql1 = "SELECT sm.id AS smid FROM " + " sys_menu sm JOIN sys_menu_right smr JOIN sys_user_right sur "
-				+ " ON sm.id=smr.menuID and smr.rightID=sur.rightID WHERE sur.userID=?";
+		String sql1 = "SELECT sm.id AS smid "
+				+ "FROM sys_menu sm JOIN sys_menu_right smr JOIN sys_user_right sur "
+				+ "ON sm.id=smr.menuID and smr.rightID=sur.rightID "
+				+ "WHERE sur.userID=?";
 		List<HashMap<String, Object>> menuIDList = this.selectListMapBySql(sql1, sysUser.getId());
 		String mids = "'";
 		for (Map<String, Object> map : menuIDList) {
@@ -40,13 +46,17 @@ public class SysMenuServiceImpl extends BaseServiceImpl<SysMenu> implements SysM
 		} else {
 			mids = null;
 		}
-		String sql2 = "SELECT id as id, menuName as menuname, menuUrl as menuurl, "
-				+ "parentID as _parentId, status as status FROM sys_menu ";
+		String sql2 = "SELECT id as id, menuName as menuname, menuUrl as menuurl, parentID as _parentId, status as status FROM sys_menu ";
 		if(!sysUser.getLoginname().equals("admin")){
 			sql2+= " WHERE id IN(" + mids + ") "
 					+ "OR id IN(SELECT DISTINCT parentID FROM sys_menu WHERE id IN(" + mids + "))";
 		}
-		return this.getPageBean(Constant.PAGEBEANTYPE_MAP, sql2, 1, 9999);
+		
+		List<Map<String, Object>> list=sysMenuMapper.loadUserMenu(sysUser.getId());
+		System.out.println(list);
+		PageBean pageBean = this.getPageBean(Constant.PAGEBEANTYPE_MAP, sql2, 1, 9999);
+		System.out.println(pageBean.getRows());
+		return pageBean;
 	}
 
 	@Override
