@@ -71,10 +71,18 @@ public interface BaseService<T> {
 	 * @return
 	 */
 	PageBean getPageBean(Integer type, String sql, Integer page, Integer pageSize, Object... objects);
+	
+	/**
+	 * 得到pageBean
+	 * @param currentPage 第几页
+	 * @param pageSize 每页多少条记录
+	 * @param t 条件封装
+	 * @return pageBean
+	 */
+	PageBean getPageBean(int currentPage, int pageSize, T t);
 
 	/**
 	 * 通过sql，得到该sql查询的记录数
-	 * 
 	 * @author L
 	 * @date 2015-7-2
 	 * @param sql
@@ -88,12 +96,9 @@ public interface BaseService<T> {
 	 * 
 	 * @author L
 	 * @date 2015-11-18
-	 * @param sql
-	 *            原sql
-	 * @param page
-	 *            第几页
-	 * @param pageSize
-	 *            每页多少条记录
+	 * @param sql 原sql
+	 * @param page 第几页
+	 * @param pageSize 每页多少条记录
 	 * @return
 	 */
 	String getPageBeanSqlMYSQL(String sql, Integer page, Integer pageSize);

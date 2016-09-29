@@ -105,18 +105,34 @@ public abstract class BaseServiceImpl<T> implements BaseService<T> {
 
 		return pageBean;
 	}
-
+	
+	public String getPageBeanSqlMYSQL(String sql, Integer page, Integer pageSize) {
+		Integer startI = (page - 1) * pageSize;
+		String pageBeanSql = sql + " LIMIT " + startI + "," + pageSize;
+		return pageBeanSql;
+	}
+	
 	public Integer getTotlaBySql(String sql, Object... objects) {
 		int index = sql.toLowerCase().indexOf("from");
 		String subString = sql.substring(index);
 		String newSql = "select count(*) " + subString;
 		return jdbcTemplate.queryForObject(newSql, objects, Integer.class);
 	}
-
-	public String getPageBeanSqlMYSQL(String sql, Integer page, Integer pageSize) {
-		Integer startI = (page - 1) * pageSize;
-		String pageBeanSql = sql + " LIMIT " + startI + "," + pageSize;
-		return pageBeanSql;
+	
+	public PageBean getPageBean(int currentPage, int pageSize, T t) {
+		Integer total = baseMapper.getAllRow(t);
+		List<Map<?, ?>> rows = baseMapper.getTListBySearch(PageBean.countOffset(pageSize, currentPage), pageSize, t);
+		PageBean pageBean = new PageBean();
+		pageBean.setTotal(total);
+		pageBean.setRows(rows);
+		pageBean.setTotalPage(PageBean.countTatalPage(pageSize, total));
+		pageBean.setCurrentPage(currentPage);
+		pageBean.setPageSize(pageSize);
+		return pageBean;
 	}
+
+	
+
+	
 
 }

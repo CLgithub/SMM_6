@@ -107,6 +107,7 @@ public class SysMenuServiceImpl extends BaseServiceImpl<SysMenu> implements SysM
 		if (null!=searchWhere ) {
 			sql += " and menuname like '%" + searchWhere + "%' or menuUrl like '%" + searchWhere + "%' ";
 		}
+		
 		return this.getPageBean(Constant.PAGEBEANTYPE_MAP, sql, 1, 9999);
 	}
 
