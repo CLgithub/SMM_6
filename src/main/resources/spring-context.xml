@@ -20,8 +20,7 @@
 	
 	<!-- 配置通过注释方式注入 -->
 	<context:annotation-config />
-	
-	
+
 	<!-- 引入jdbc配置文件 -->
 	<context:property-placeholder location="classpath:jdbc.properties"/>
 	<!--配置数据源 -->

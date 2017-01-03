@@ -1,7 +1,6 @@
 package com.cl.smm6.common.listener;
 
 import javax.annotation.Resource;
-
 import org.springframework.context.ApplicationEvent;
 import org.springframework.context.ApplicationListener;
 import org.springframework.context.event.ContextRefreshedEvent;
