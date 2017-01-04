@@ -3,7 +3,13 @@ Thumbs.db
 ehthumbs.db
 data.db
 *.iml
+
 .idea/
+.classpath
+.project
+.settings/
+bin/
+build/
 
 # Folder config file
 Desktop.ini
