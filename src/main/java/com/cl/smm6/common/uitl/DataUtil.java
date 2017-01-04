@@ -205,9 +205,9 @@ public class DataUtil {
 	 * @return
 	 */
 	public static List<HashMap<String, Object>> getChildJson(List<HashMap<String, Object>> list){
-		List<HashMap<String, Object>> list2=new ArrayList<>();
+		List<HashMap<String, Object>> list2=new ArrayList<HashMap<String, Object>>();
 		HashMap<String, Object> sysMenu1;
-		Set<Integer> childrenIds=new HashSet<>();
+		Set<Integer> childrenIds=new HashSet<Integer>();
 		for(int i=0;i<list.size();i++){
 			List<HashMap<String, Object>> children=new ArrayList<>();
 			HashMap<String, Object> sysMenu2 = null;

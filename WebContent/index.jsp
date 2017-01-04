@@ -26,7 +26,7 @@
 	function loginF() {
 		var userName = document.getElementById("userName").value;
 		var password = hex_md5(document.getElementById("password").value);
-		//alert(password);
+//		alert(password);
 		$.ajax({
 			url : "<%=basePath%>/loginController/doLogin.action",
 			data : "userName=" + userName + "&password=" + password,

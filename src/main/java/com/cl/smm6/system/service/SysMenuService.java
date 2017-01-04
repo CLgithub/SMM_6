@@ -1,13 +1,12 @@
 package com.cl.smm6.system.service;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
 import com.cl.smm6.common.entity.SysMenu;
 import com.cl.smm6.common.entity.SysUser;
 import com.cl.smm6.common.servicebase.BaseService;
 import com.cl.smm6.common.uitl.PageBean;
+
+import java.util.HashMap;
+import java.util.List;
 
 public interface SysMenuService extends BaseService<SysMenu> {
 
@@ -19,7 +18,7 @@ public interface SysMenuService extends BaseService<SysMenu> {
 	 * @param sysUser
 	 * @return 用户菜单pageBean
 	 */
-	PageBean loadUserMenu(SysUser sysUser);
+	List<HashMap<String, Object>> loadUserMenu(SysUser sysUser);
 
 	/**
 	 * 新增或修改菜单,id=0则为新增

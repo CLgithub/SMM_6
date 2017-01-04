@@ -25,11 +25,10 @@
 			type : "post",
 			success : function(data) {
 				var dataObj = eval("(" + data + ")");
-				$.each(dataObj.rows, function(index, item){
-				//	alert(dataObj.rows[1].menuname);
-				//	alert(dataObj.rows[1].menuurl);
+//				alert(dataObj[1].menuname);
+				$.each(dataObj, function(index, item){
 					document.getElementById("menu").innerHTML+=
-						'<a href=<%=basePath%>'+dataObj.rows[index].menuurl+' target="rightFrame">'+dataObj.rows[index].menuname+'</a><br>'
+						'<a href=<%=basePath%>'+dataObj[index].menuurl+' target="rightFrame">'+dataObj[index].menuname+'</a><br>'
 				});
 			}
 		});

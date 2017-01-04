@@ -1,13 +1,5 @@
 package com.cl.smm6.system.serviceimpl;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
-import javax.annotation.Resource;
-
-import org.springframework.stereotype.Service;
-
 import com.cl.smm6.common.entity.SysMenu;
 import com.cl.smm6.common.entity.SysUser;
 import com.cl.smm6.common.mapper.SysMenuMapper;
@@ -17,6 +9,12 @@ import com.cl.smm6.common.uitl.Constant;
 import com.cl.smm6.common.uitl.DataUtil;
 import com.cl.smm6.common.uitl.PageBean;
 import com.cl.smm6.system.service.SysMenuService;
+import org.springframework.stereotype.Service;
+
+import javax.annotation.Resource;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 @Service
 public class SysMenuServiceImpl extends BaseServiceImpl<SysMenu> implements SysMenuService {
@@ -30,7 +28,7 @@ public class SysMenuServiceImpl extends BaseServiceImpl<SysMenu> implements SysM
 	private SysMenuMapper sysMenuMapper;
 
 	@Override
-	public PageBean loadUserMenu(SysUser sysUser) {
+	public List<HashMap<String, Object>> loadUserMenu(SysUser sysUser) {
 		String sql1 = "SELECT sm.id AS smid "
 				+ "FROM sys_menu sm JOIN sys_menu_right smr JOIN sys_user_right sur "
 				+ "ON sm.id=smr.menuID and smr.rightID=sur.rightID "
@@ -51,12 +49,8 @@ public class SysMenuServiceImpl extends BaseServiceImpl<SysMenu> implements SysM
 			sql2+= " WHERE id IN(" + mids + ") "
 					+ "OR id IN(SELECT DISTINCT parentID FROM sys_menu WHERE id IN(" + mids + "))";
 		}
-		
-		List<Map<String, Object>> list=sysMenuMapper.loadUserMenu(sysUser.getId());
-		System.out.println(list);
-		PageBean pageBean = this.getPageBean(Constant.PAGEBEANTYPE_MAP, sql2, 1, 9999);
-		System.out.println(pageBean.getRows());
-		return pageBean;
+		List<HashMap<String, Object>> list=this.selectListMapBySql(sql2);
+		return list;
 	}
 
 	@Override

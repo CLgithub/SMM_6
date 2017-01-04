@@ -5,8 +5,48 @@
 	<artifactId>SMM_6</artifactId>
 	<packaging>war</packaging>
 	<version>0.0.1-SNAPSHOT</version>
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<configuration>
+					<source>1.7</source>
+					<target>1.7</target>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
 	<name>SMM_6 Maven Webapp</name>
 	<url>http://maven.apache.org</url>
+
+	<!-- 私服 -->
+	<repositories>
+		<repository>
+			<snapshots>
+				<enabled>false</enabled>
+			</snapshots>
+			<id>public</id>
+			<name>Public Repositories</name>
+			<url>http://192.168.182.87:8081/nexus/content/groups/public/</url>
+			<layout>default</layout>
+		</repository>
+	</repositories>
+	<!--maven的生命周期插件的下载地址 -->
+	<pluginRepositories>
+		<pluginRepository>
+			<releases>
+				<updatePolicy>never</updatePolicy>
+			</releases>
+			<id>public</id>
+			<name>Public Repositories</name>
+			<url>http://192.168.182.87:8081/nexus/content/groups/public/</url>
+			<layout>default</layout>
+			<snapshots>
+				<enabled>false</enabled>
+			</snapshots>
+		</pluginRepository>
+	</pluginRepositories>
 	
 	<properties>
 		<spring>4.3.2.RELEASE</spring>
@@ -33,6 +73,12 @@
 	</properties>
 
 	<dependencies>
+		<dependency>
+		    <groupId>junit</groupId>
+		    <artifactId>junit</artifactId>
+		    <version>4.12</version>
+            <scope>test</scope>
+		</dependency>
 		<!-- spring核心包 -->
 		<dependency>
 			<groupId>org.springframework</groupId>
@@ -176,54 +222,5 @@
 		</dependency>
 	</dependencies>
 
-	<!-- 配置私服地址 -->
-	<!--maven的生命周期插件的下载地址 -->
-	<repositories>
-		<repository>
-			<snapshots>
-				<enabled>false</enabled>
-			</snapshots>
-			<!-- v3 -->
-			<!-- <id>maven-public</id>
-			<name>maven-public</name>
-			<url>http://localhost:8081/repository/maven-public/</url> -->
-			
-			<!-- v2 -->
-			<!-- <id>public</id>
-			<name>Public Repositories</name>
-			<url>http://localhost:8081/nexus/content/groups/public/</url> -->
-			
-			<!-- 中央服务器 -->
-			<id>central</id>
-			<name>Central Repository</name>
-			<url>http://repo.maven.apache.org/maven2</url>
-			<layout>default</layout>
-		</repository>
-	</repositories>
-	<pluginRepositories>
-		<pluginRepository>
-			<releases>
-				<updatePolicy>never</updatePolicy>
-			</releases>
-			<!-- v3 -->
-			<!-- <id>maven-public</id>
-			<name>maven-public</name>
-			<url>http://localhost:8081/repository/maven-public/</url> -->
-			
-			<!-- v2 -->
-			<!-- <id>public</id>
-			<name>Public Repositories</name>
-			<url>http://localhost:8081/nexus/content/groups/public/</url> -->
-			
-			<!-- 中央服务器 -->
-			<id>central</id>
-			<name>Central Repository</name>
-			<url>http://repo.maven.apache.org/maven2</url>
-			<layout>default</layout>
-			<snapshots>
-				<enabled>false</enabled>
-			</snapshots>
-		</pluginRepository>
-	</pluginRepositories>
 
 </project>

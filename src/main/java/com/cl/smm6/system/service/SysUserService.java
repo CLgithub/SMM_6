@@ -6,7 +6,7 @@ import com.cl.smm6.common.entity.SysUser;
 import com.cl.smm6.common.servicebase.BaseService;
 import com.cl.smm6.common.uitl.PageBean;
 
-@WebService
+//@WebService
 public interface SysUserService extends BaseService<SysUser> {
 
 	/**

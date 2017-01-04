@@ -1,20 +1,15 @@
 package com.cl.smm6.system.controller;
 
-import javax.annotation.Resource;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.ModelMap;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.servlet.ModelAndView;
-
 import com.cl.smm6.common.entity.SysUser;
-import com.cl.smm6.common.uitl.PageBean;
 import com.cl.smm6.system.service.SysMenuService;
 import com.cl.smm6.system.service.SysRightsService;
 import com.cl.smm6.system.service.SysUserService;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
+
+import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
 
 @Controller
 @RequestMapping(value = "loginController")
