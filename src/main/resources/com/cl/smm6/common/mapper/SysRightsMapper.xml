@@ -119,4 +119,13 @@
 	<select id="getMaxRigthPos" resultType="java.lang.Integer">
 		select max(rightpos) from sys_rights;
 	</select>
+
+    <!--根据用户id得到其拥有的权限-->
+    <resultMap id="resultMap1" type="java.util.Map">
+
+    </resultMap>
+    <select id="getRightByUser" resultMap="resultMap1">
+      SELECT * from sys_user_right sur LEFT JOIN sys_rights sr on sur.rightID=sr.id
+      WHERE sr.common='0' and sur.userID =#{uid}
+    </select>
 </mapper>

@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 @Controller
 @RequestMapping(value = "commonController")
@@ -48,8 +49,8 @@ public class CommonController {
 	 */
 	@RequestMapping(value = "getRightByUser")
 	@ResponseBody
-	public Object getRightByUser(HttpServletRequest request, Integer uid) {
-		SysUser sysUser = (SysUser) request.getSession().getAttribute("sysUser");
+	public Object getRightByUser(HttpSession session, Integer uid) {
+		SysUser sysUser = (SysUser) session.getAttribute("sysUser");
 		uid=uid==null?sysUser.getId():uid;
 		return sysRightsService.getRightByUser(uid);
 	}

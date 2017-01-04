@@ -124,4 +124,38 @@
 	<select id="getRightByUserID" resultType="com.cl.smm6.common.entity.SysRights">
 		SELECT * from sys_rights WHERE id IN(SELECT rightID from sys_user_right WHERE userID=#{id})
 	</select>
+
+    <sql id="searchWhere" >
+      name LIKE #{t.name}
+    </sql>
+    <!--根据条件查询符合条件的总记录数-->
+    <select id="getAllRow" resultType="java.lang.Integer">
+        SELECT count(1) from sys_user
+        <where>
+          <if test="t!=null">
+            <include refid="searchWhere" />
+          </if>
+        </where>
+    </select>
+
+    <!--查询满足条件的记录-->
+    <resultMap id="resultMap1" type="java.util.Map">
+        <id column="id" property="id" jdbcType="INTEGER" />
+        <result column="name" property="name" jdbcType="VARCHAR" />
+        <result column="loginname" property="loginname" jdbcType="VARCHAR" />
+        <result column="number" property="number" jdbcType="INTEGER" />
+        <result column="status" property="status" jdbcType="VARCHAR" />
+        <result column="sysdepcode" property="sysdepcode" jdbcType="INTEGER" />
+        <result column="depname" property="depname" jdbcType="VARCHAR" />
+    </resultMap>
+    <select id="getTListBySearch" resultMap="resultMap1">
+        SELECT id,name,loginname,number,su.status as status,sysdepcode,depname
+        FROM sys_user su left join sys_department sd on su.sysDepCode=sd.depCode
+        <where>
+            <if test="t!=null">
+                <include refid="searchWhere" />
+            </if>
+        </where>
+        LIMIT #{startIndex},#{len}
+    </select>
 </mapper>

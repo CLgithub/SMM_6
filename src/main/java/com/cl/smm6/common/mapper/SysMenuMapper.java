@@ -1,5 +1,6 @@
 package com.cl.smm6.common.mapper;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -22,6 +23,12 @@ public interface SysMenuMapper extends BaseMapper<SysMenu> {
 	 * @param id
 	 * @return
 	 */
-	List<Map<String, Object>> loadUserMenu(@Param("userId")Integer userId);
+	List<HashMap<String, Object>> loadUserMenu(@Param("userId")Integer userId);
 
+
+	/**
+	 * 得到所有菜单
+	 * @return
+	 */
+	List<Map<String,Object>> getAllListMap();
 }

@@ -1,22 +1,15 @@
 package com.cl.smm6.common.servicebase;
 
-import java.lang.reflect.ParameterizedType;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
-import java.util.Map.Entry;
-import java.util.Set;
-
-import javax.annotation.Resource;
-
-import org.springframework.jdbc.core.BeanPropertyRowMapper;
-import org.springframework.jdbc.core.JdbcTemplate;
-
 import com.cl.smm6.common.mapperbase.BaseMapper;
 import com.cl.smm6.common.uitl.Constant;
 import com.cl.smm6.common.uitl.PageBean;
+import org.springframework.jdbc.core.BeanPropertyRowMapper;
+import org.springframework.jdbc.core.JdbcTemplate;
+
+import javax.annotation.Resource;
+import java.lang.reflect.ParameterizedType;
+import java.util.*;
+import java.util.Map.Entry;
 
 public abstract class BaseServiceImpl<T> implements BaseService<T> {
 
@@ -87,6 +80,7 @@ public abstract class BaseServiceImpl<T> implements BaseService<T> {
 	}
 
 	public PageBean getPageBean(Integer type, String sql, Integer page, Integer pageSize, Object... objects) {
+
 		String pageSql = this.getPageBeanSqlMYSQL(sql, page, pageSize);
 		List<?> list = new ArrayList<T>();
 		if (type == Constant.PAGEBEANTYPE_T) {
@@ -94,14 +88,11 @@ public abstract class BaseServiceImpl<T> implements BaseService<T> {
 		} else if (type == Constant.PAGEBEANTYPE_MAP) {
 			list = this.selectListMapBySql(pageSql, objects);
 		}
+
 		Integer allRow = this.getTotlaBySql(sql, objects);// 得到总的记录长度
 		PageBean pageBean = new PageBean();
 		pageBean.setTotal(allRow);
 		pageBean.setRows(list);
-
-		// pageBean.setTotal(allRow);
-		// pageBean.setTotal_rows(allRow);
-		// pageBean.setPage_data(list);
 
 		return pageBean;
 	}
@@ -131,8 +122,6 @@ public abstract class BaseServiceImpl<T> implements BaseService<T> {
 		return pageBean;
 	}
 
-	
 
-	
 
 }

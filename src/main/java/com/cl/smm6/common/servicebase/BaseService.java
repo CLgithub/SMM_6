@@ -1,10 +1,9 @@
 package com.cl.smm6.common.servicebase;
 
+import com.cl.smm6.common.uitl.PageBean;
+
 import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
-
-import com.cl.smm6.common.uitl.PageBean;
 
 public interface BaseService<T> {
 
@@ -71,6 +70,7 @@ public interface BaseService<T> {
 	 * @return
 	 */
 	PageBean getPageBean(Integer type, String sql, Integer page, Integer pageSize, Object... objects);
+
 	
 	/**
 	 * 得到pageBean

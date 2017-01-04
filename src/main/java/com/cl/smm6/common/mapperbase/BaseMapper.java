@@ -1,9 +1,9 @@
 package com.cl.smm6.common.mapperbase;
 
+import org.apache.ibatis.annotations.Param;
+
 import java.util.List;
 import java.util.Map;
-
-import org.apache.ibatis.annotations.Param;
 
 public interface BaseMapper<T> {
 
@@ -37,7 +37,6 @@ public interface BaseMapper<T> {
 	 */
 	T selectByPrimaryKey(Integer id);
 
-	
 	/**
 	 * 查询满足条件的记录条数
 	 * @param t 条件封装
@@ -46,11 +45,12 @@ public interface BaseMapper<T> {
 	Integer getAllRow(@Param("t")T t);
 
 	/**
-	 * 查询满足条件的记录
-	 * @param pageSize 
-	 * @param i 
-	 * @return
+	 * 查询满足条件的记录数
+	 * @param startIndex 开始的索引
+	 * @param len 查询条数
+	 * @param t 查询条件
+	 * @return 放回listMap
 	 */
-	List<Map<?, ?>> getTListBySearch(@Param("beginIndex")Integer beginIndex,@Param("len")Integer len, @Param("t")T t);
+	List<Map<?, ?>> getTListBySearch(@Param("startIndex")Integer startIndex, @Param("len")Integer len, @Param("t")T t);
 
 }

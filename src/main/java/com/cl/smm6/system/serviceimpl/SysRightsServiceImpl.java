@@ -1,12 +1,5 @@
 package com.cl.smm6.system.serviceimpl;
 
-import java.util.HashMap;
-import java.util.List;
-
-import javax.annotation.Resource;
-
-import org.springframework.stereotype.Service;
-
 import com.cl.smm6.common.entity.SysRights;
 import com.cl.smm6.common.mapper.SysRightsMapper;
 import com.cl.smm6.common.mapperbase.BaseMapper;
@@ -15,6 +8,12 @@ import com.cl.smm6.common.uitl.Constant;
 import com.cl.smm6.common.uitl.PageBean;
 import com.cl.smm6.system.service.SysRightsService;
 import com.cl.smm6.system.service.SysUserService;
+import org.springframework.stereotype.Service;
+
+import javax.annotation.Resource;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 @Service
 public class SysRightsServiceImpl extends BaseServiceImpl<SysRights> implements SysRightsService {
@@ -157,7 +156,13 @@ public class SysRightsServiceImpl extends BaseServiceImpl<SysRights> implements 
 		if(sysUserService.selectByPrimaryKey(uid).getLoginname().equals("admin")){
 			sql="SELECT * from sys_rights sr WHERE common ='0'";
 		}
-		return this.selectListMapBySql(sql);
+
+		List<Map<String,Object>> listMap=sysRightsMapper.getRightByUser(uid);
+		System.out.println("new:"+listMap);
+
+		List<HashMap<String, Object>> l=this.selectListMapBySql(sql);
+		System.out.println("old:"+l);
+		return l;
 	}
 
 }

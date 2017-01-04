@@ -1,13 +1,5 @@
 package com.cl.smm6.system.serviceimpl;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
-import javax.annotation.Resource;
-
-import org.springframework.stereotype.Service;
-
 import com.cl.smm6.common.entity.SysDepartment;
 import com.cl.smm6.common.entity.SysUser;
 import com.cl.smm6.common.mapperbase.BaseMapper;
@@ -16,6 +8,11 @@ import com.cl.smm6.common.uitl.Constant;
 import com.cl.smm6.common.uitl.DataUtil;
 import com.cl.smm6.common.uitl.PageBean;
 import com.cl.smm6.system.service.SysDepartmentService;
+import org.springframework.stereotype.Service;
+
+import javax.annotation.Resource;
+import java.util.HashMap;
+import java.util.List;
 
 @Service
 public class SysDepartmentServiceImpl extends BaseServiceImpl<SysDepartment> implements SysDepartmentService {
