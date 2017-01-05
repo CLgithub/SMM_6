@@ -134,10 +134,8 @@ public class SysRightsServiceImpl extends BaseServiceImpl<SysRights> implements 
 	public boolean setRights(String uids, String rids) {
 		uids = uids.split("uids:")[1];
 		rids = rids.split("rids:").length > 1 ? rids.split("rids:")[1] : "";
-		String nuids = "'" + uids + "'";
-		nuids = nuids.replaceAll(",", "','");
-		String sql1 = "DELETE from sys_user_right WHERE userID in(" + nuids + ")";
-		this.executeSql(sql1);
+		sysRightsMapper.delUserRight(uids.split(","));
+
 		for (String uid : uids.split(",")) {
 			for (String rid : rids.split(",")) {
 				if ("" != rid) {
@@ -146,23 +144,14 @@ public class SysRightsServiceImpl extends BaseServiceImpl<SysRights> implements 
 				}
 			}
 		}
+		sysRightsMapper.addUserRight(uids.split(","),rids.split(","));
 		return true;
 	}
 
 	@Override
-	public List<HashMap<String, Object>> getRightByUser(Integer uid) {
-		String sql = "SELECT * from sys_user_right sur LEFT JOIN sys_rights sr on sur.rightID=sr.id "
-				+ "WHERE sr.common='0' and sur.userID ='"+uid+"'";
-		if(sysUserService.selectByPrimaryKey(uid).getLoginname().equals("admin")){
-			sql="SELECT * from sys_rights sr WHERE common ='0'";
-		}
-
+	public List<Map<String, Object>> getRightByUser(Integer uid) {
 		List<Map<String,Object>> listMap=sysRightsMapper.getRightByUser(uid);
-		System.out.println("new:"+listMap);
-
-		List<HashMap<String, Object>> l=this.selectListMapBySql(sql);
-		System.out.println("old:"+l);
-		return l;
+		return listMap;
 	}
 
 }

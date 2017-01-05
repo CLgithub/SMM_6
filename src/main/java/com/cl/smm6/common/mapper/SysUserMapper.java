@@ -1,12 +1,11 @@
 package com.cl.smm6.common.mapper;
 
-import java.util.List;
-
-import org.apache.ibatis.annotations.Param;
-
 import com.cl.smm6.common.entity.SysRights;
 import com.cl.smm6.common.entity.SysUser;
 import com.cl.smm6.common.mapperbase.BaseMapper;
+import org.apache.ibatis.annotations.Param;
+
+import java.util.List;
 
 public interface SysUserMapper extends BaseMapper<SysUser> {
 
@@ -25,4 +24,11 @@ public interface SysUserMapper extends BaseMapper<SysUser> {
 	 */
 	List<SysRights> getRightByUserID(@Param("id") Integer id);
 
+
+	/**
+	 * 根据ids，删除用户
+	 * @param ids
+	 * @return
+	 */
+    int deleteUserByIDs(@Param("ids") String[] ids);
 }

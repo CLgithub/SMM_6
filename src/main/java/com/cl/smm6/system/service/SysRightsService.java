@@ -1,12 +1,11 @@
 package com.cl.smm6.system.service;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
 import com.cl.smm6.common.entity.SysRights;
 import com.cl.smm6.common.servicebase.BaseService;
 import com.cl.smm6.common.uitl.PageBean;
+
+import java.util.List;
+import java.util.Map;
 
 public interface SysRightsService extends BaseService<SysRights> {
 
@@ -80,12 +79,12 @@ public interface SysRightsService extends BaseService<SysRights> {
 	boolean setRights(String uids, String rids);
 
 	/**
-	 * 根据用户id得到该用户的权限ListMap(超级管理员可以得到所有非公共权限)
+	 * 根据用户id得到该用户的权限ListMap
 	 * @author L
 	 * @date 2016年1月21日
 	 * @param uid 用户id
 	 * @return 权限listMap
 	 */
-	List<HashMap<String, Object>> getRightByUser(Integer uid);
+	List<Map<String, Object>> getRightByUser(Integer uid);
 
 }

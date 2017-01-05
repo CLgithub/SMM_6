@@ -158,4 +158,13 @@
         </where>
         LIMIT #{startIndex},#{len}
     </select>
+
+    <!--根据ids，删除用户-->
+    <delete id="deleteUserByIDs" parameterType="java.lang.Integer" >
+        DELETE from sys_user WHERE id in
+        <foreach collection="ids" index="index" item="item" open="(" separator="," close=")">
+           #{item}
+        </foreach>
+    </delete>
+
 </mapper>

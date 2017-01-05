@@ -21,4 +21,17 @@ public interface SysRightsMapper extends BaseMapper<SysRights> {
 	 * @return
 	 */
     List<Map<String,Object>> getRightByUser(@Param("uid") Integer uid);
+
+	/**
+	 * 根据用户id删除用户的权限
+	 * @param ids 用户id数组
+	 */
+	void delUserRight(@Param("ids") String[] ids);
+
+	/**
+	 * 给这些用户添加这些权限
+	 * @param uids 用户id数组
+	 * @param rids 权限id数组
+	 */
+	void addUserRight(String[] uids, String[] rids);
 }

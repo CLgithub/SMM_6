@@ -98,14 +98,12 @@ public class SysUserServiceImpl extends BaseServiceImpl<SysUser> implements SysU
 
 	@Override
 	public boolean deleteUserByIDs(String idTxts) {
-		idTxts = "'" + idTxts + "'";
-		idTxts = idTxts.replaceAll(",", "','");
-		String sql = "DELETE from sys_user WHERE id in(" + idTxts + ")";
-		if (this.executeSql(sql) != 0) {
-			return true;
-		} else {
-			return false;
-		}
+        int i=sysUserMapper.deleteUserByIDs(idTxts.split(","));
+        if (i!= 0) {
+            return true;
+        } else {
+            return false;
+        }
 	}
 
 	@Override
