@@ -73,21 +73,12 @@
 	</properties>
 
 	<dependencies>
-<<<<<<< HEAD
 		<dependency>
 		    <groupId>junit</groupId>
 		    <artifactId>junit</artifactId>
 		    <version>4.12</version>
             <scope>test</scope>
 		</dependency>
-=======
-		<!-- <dependency>
-			<groupId>junit</groupId>
-			<artifactId>junit</artifactId>
-			<version>4.12</version>
-			<scope>test</scope>
-		</dependency> -->
->>>>>>> cb310e7f03f9c35651f5fb6f77edcfee62893ef1
 		<!-- spring核心包 -->
 		<dependency>
 			<groupId>org.springframework</groupId>
@@ -110,11 +101,16 @@
 			<version>${spring}</version>
 		</dependency>
 		
-		<!-- dbcp连接 -->
-		<dependency>
+		<!-- 连接池 -->
+		<!--<dependency>
 			<groupId>com.mchange</groupId>
 			<artifactId>c3p0</artifactId>
 			<version>${c3p0}</version>
+		</dependency>-->
+		<dependency>
+			<groupId>com.zaxxer</groupId>
+			<artifactId>HikariCP</artifactId>
+			<version>2.5.1</version>
 		</dependency>
 		<dependency>
 			<groupId>commons-logging</groupId>

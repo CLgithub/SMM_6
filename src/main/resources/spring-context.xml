@@ -24,10 +24,10 @@
 	<!-- 引入jdbc配置文件 -->
 	<context:property-placeholder location="classpath:jdbc.properties"/>
 	<!--配置数据源 -->
-	<bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource" >
-		<property name="driverClass" value="${jdbc.driver}" />
+	<bean id="dataSource" class="com.zaxxer.hikari.HikariDataSource" >
+		<property name="driverClassName" value="${jdbc.driver}" />
 		<property name="jdbcUrl" value="${jdbc.url}" />
-		<property name="user" value="${jdbc.username}" />
+		<property name="username" value="${jdbc.username}" />
 		<property name="password" value="${jdbc.password}" />
 	</bean>
 	
