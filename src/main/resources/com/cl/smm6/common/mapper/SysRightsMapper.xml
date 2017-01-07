@@ -147,6 +147,11 @@
 
     <!--给这些用户添加这些权限-->
     <insert id="addUserRight" parameterType="java.lang.Integer">
-      INSERT INTO sys_user_right(userID,rightID) values(?,?)
+      INSERT INTO sys_user_right(userID,rightID) values
+      <foreach collection="rids" index="index1" item="rid" separator=",">
+          <foreach collection="uids" index="index2" item="uid" separator=",">
+            (#{uid},#{rid})
+          </foreach>
+      </foreach>
     </insert>
 </mapper>

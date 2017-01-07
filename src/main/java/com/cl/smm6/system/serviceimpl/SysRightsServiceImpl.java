@@ -135,16 +135,9 @@ public class SysRightsServiceImpl extends BaseServiceImpl<SysRights> implements 
 		uids = uids.split("uids:")[1];
 		rids = rids.split("rids:").length > 1 ? rids.split("rids:")[1] : "";
 		sysRightsMapper.delUserRight(uids.split(","));
-
-		for (String uid : uids.split(",")) {
-			for (String rid : rids.split(",")) {
-				if ("" != rid) {
-					String sql2 = "INSERT INTO sys_user_right(userID,rightID) values(?,?)";
-					this.executeSql(sql2, uid, rid);
-				}
-			}
+        if(!"".equals(rids)){
+			sysRightsMapper.addUserRight(uids.split(","),rids.split(","));
 		}
-		sysRightsMapper.addUserRight(uids.split(","),rids.split(","));
 		return true;
 	}
 
