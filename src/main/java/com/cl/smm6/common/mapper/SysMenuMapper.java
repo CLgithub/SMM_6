@@ -13,14 +13,14 @@ public interface SysMenuMapper extends BaseMapper<SysMenu> {
 
 	/**
 	 * 根据用户id得到其菜单id
-	 * @param id
+	 * @param userId
 	 * @return
 	 */
 	List<Integer> getMidByUid(@Param("userId")Integer userId);
 
 	/**
 	 * 更加用户id，加载用户菜单
-	 * @param id
+	 * @param userId
 	 * @return
 	 */
 	List<HashMap<String, Object>> loadUserMenu(@Param("userId")Integer userId);

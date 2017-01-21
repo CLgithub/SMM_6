@@ -107,13 +107,14 @@
 	</sql>
 	<resultMap id="BaseResultMap_2" type="java.util.Map" >
 		<id column="id" property="id" jdbcType="INTEGER" />
-		<result column="menuName" property="menuname" jdbcType="VARCHAR" />
+		<result column="menuname" property="menuname" jdbcType="VARCHAR" />
+        <result column="text" property="text" jdbcType="VARCHAR" />
 		<result column="menuUrl" property="menuurl" jdbcType="VARCHAR" />
 		<result column="parentID" property="_parentId" jdbcType="INTEGER" />
 		<result column="status" property="status" jdbcType="INTEGER" />
 	</resultMap>
 	<select id="loadUserMenu" resultMap="BaseResultMap_2" >
-		 select id as id, menuName as menuname, menuUrl as menuurl, parentID as _parentId, status as status 
+		 select id, menuName as menuname, menuName as text, menuUrl , parentID , status
 		 from sys_menu 
 		 <where>
 		 	and id in (<include refid="getMidBuidSql" />)
@@ -138,4 +139,36 @@
     <select id="getAllListMap" resultMap="treeMap">
         SELECT id as id, menuName as menuname, menuUrl as menuurl, parentID as _parentId, status as status FROM sys_menu where 1=1
     </select>
+
+
+    <sql id="searchWhere" >
+        name LIKE #{t.name}
+    </sql>
+    <!--根据条件查询符合条件的总记录数-->
+    <select id="getAllRow" resultType="java.lang.Integer">
+        SELECT count(1) from sys_menu
+        <where>
+          <if test="t!=null">
+            <include refid="searchWhere" />
+          </if>
+        </where>
+    </select>
+    <!--查询满足条件的记录-->
+    <resultMap id="resultMap1" type="java.util.Map">
+        <id column="id" property="id" jdbcType="INTEGER" />
+        <result column="menuName" property="menuname" jdbcType="VARCHAR" />
+        <result column="menuUrl" property="menuurl" jdbcType="VARCHAR" />
+        <result column="parentID" property="_parentId" jdbcType="INTEGER" />
+        <result column="status" property="status" jdbcType="VARCHAR" />
+    </resultMap>
+    <select id="getTListBySearch" resultMap="resultMap1">
+        SELECT id, menuName, menuUrl, parentID, status FROM sys_menu
+        <where>
+            <if test="t!=null">
+                <include refid="searchWhere" />
+            </if>
+        </where>
+        LIMIT #{startIndex},#{len}
+    </select>
+
 </mapper>

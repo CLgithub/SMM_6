@@ -32,22 +32,7 @@ public class SysUserServiceImpl extends BaseServiceImpl<SysUser> implements SysU
 
 	@Override
 	public PageBean getUserPBBySearch(SysUser sysUser, Integer page, Integer pageSize, String searchWhere) {
-//		Integer depCode=sysUser.getSysdepcode();
-//		if(null!=depCode){
-//			depCode=DataUtil.getDepCodePByDepCode(depCode);
-//		}
-//		String sql = "SELECT id,name,loginname,number,su.status as status,sysdepcode,depname from sys_user su left join sys_department sd on su.sysDepCode=sd.depCode "
-//				+ " where 1=1 "
-//				+ " and sysdepcode like '"+depCode+"%'"
-//				+ " AND (`name` LIKE '%" + searchWhere + "%' OR loginName LIKE '%"
-//				+ searchWhere + "%' OR number LIKE '%" + searchWhere + "%')";
-//		PageBean pageBean2=this.getPageBean(Constant.PAGEBEANTYPE_MAP, sql, page, pageSize);
-
-//        SysUser sysUser2=new SysUser();
-//        sysUser2.setName(searchWhere);
-        PageBean pageBean=this.getPageBean(page,pageSize,null);
-//        System.out.println(pageBean);
-        return pageBean;
+        return this.getPageBean(page, pageSize,null);
 	}
 
 	@Override

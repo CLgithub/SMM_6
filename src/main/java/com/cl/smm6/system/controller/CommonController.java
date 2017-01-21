@@ -35,8 +35,8 @@ public class CommonController {
 	 */
 	@RequestMapping(value = "loadUserMenu")
 	@ResponseBody
-	public Object loadUserMenu(HttpServletRequest request) {
-		SysUser sysUser = (SysUser) request.getSession().getAttribute("sysUser");
+	public Object loadUserMenu(HttpSession session) {
+		SysUser sysUser = (SysUser) session.getAttribute("sysUser");
 		return sysMenuService.loadUserMenu(sysUser);
 	}
 	

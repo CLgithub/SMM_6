@@ -48,7 +48,7 @@ public class SysRightsServiceImpl extends BaseServiceImpl<SysRights> implements 
 			SysRights sysRights = new SysRights();
 			sysRights.setRighturl(url);
 			// 处理权限位和权限码
-			int rightPos = 0;
+		int rightPos = 0;
 			long rightCode = 1;
 			// 查询最大权限位上的最大权限码
 			String sql2 = "SELECT MAX(r.rightpos) as maxPos, MAX(r.rightcode)as maxCode from sys_rights r WHERE r.rightpos=(SELECT MAX(rr.rightpos) FROM sys_rights rr)";
