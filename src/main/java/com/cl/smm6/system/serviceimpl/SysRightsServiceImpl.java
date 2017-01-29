@@ -89,7 +89,11 @@ public class SysRightsServiceImpl extends BaseServiceImpl<SysRights> implements 
 				+ searchWhere + "%' OR rightname LIKE '%" + searchWhere + "%' OR rightdesc LIKE '%" + searchWhere
 				+ "%' OR common LIKE '%" + searchWhere + "%') ORDER BY id ";
 //		System.out.println(sql);
-		return this.getPageBean(Constant.PAGEBEANTYPE_MAP, sql, page, rows);
+		PageBean pageBean=this.getPageBean(page,rows,null);
+		System.out.println(pageBean);
+		PageBean pageBean1=this.getPageBean(Constant.PAGEBEANTYPE_MAP, sql, page, rows);
+		System.out.println(pageBean1);
+		return pageBean1;
 	}
 
 	@Override

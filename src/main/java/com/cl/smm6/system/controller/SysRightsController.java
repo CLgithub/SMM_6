@@ -2,6 +2,7 @@ package com.cl.smm6.system.controller;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -24,7 +25,7 @@ public class SysRightsController {
 	private SysRightsService sysRightsService;
 
 	/**
-	 * 根据条件，得到权限列表
+	 * 根据条件得到该用户的权限列表
 	 * @author L
 	 * @date 2016年1月1日
 	 * @param page 第几页
@@ -34,7 +35,8 @@ public class SysRightsController {
 	 */
 	@RequestMapping(value = "getPBBySearch")
 	@ResponseBody
-	public Object getPBBySearch(Integer page, Integer rows, String searchWhere) {
+	public Object getPBBySearch(HttpSession session,Integer page, Integer rows, String searchWhere) {
+	    SysUser sysUser= (SysUser) session.getAttribute("sysUser"	);
 		return sysRightsService.getRightPBBySearch(page, rows, searchWhere);
 	}
 

@@ -154,4 +154,44 @@
           </foreach>
       </foreach>
     </insert>
+
+    <sql id="searchWhere" >
+      name LIKE #{t.name}
+    </sql>
+    <!--根据条件查询符合条件的总记录数-->
+  <resultMap id="resultMap1" type="java.util.Map">
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="righturl" property="righturl" jdbcType="VARCHAR" />
+    <result column="rightname" property="rightname" jdbcType="VARCHAR" />
+    <result column="rightdesc" property="rightdesc" jdbcType="VARCHAR" />
+    <result column="rightpos" property="rightpos" jdbcType="INTEGER" />
+    <result column="rightcode" property="rightcode" jdbcType="INTEGER" />
+    <!--<result column="common" property="common" jdbcType="BIT" />-->
+    <result column="rightID" property="rightID" jdbcType="INTEGER" />
+    <result column="smid" property="smid" jdbcType="INTEGER" />
+    <result column="menuName" property="menuName" jdbcType="VARCHAR" />
+  </resultMap>
+  <!--查询满足条件的记录-->
+    <select id="getAllRow" resultType="java.lang.Integer">
+        SELECT count(1) from sys_rights
+        <where>
+          <if test="t!=null">
+            <include refid="searchWhere" />
+          </if>
+        </where>
+    </select>
+   <!-- <select id="getTListBySearch" resultType="com.cl.smm6.common.entity.SysRights">
+        SELECT  * from sys_rights
+        /*SELECT * from sys_rights sr left join(
+          SELECT smr.rightID as rightID, sm.id as smid,sm.menuName as menuName
+            FROM sys_menu_right smr left JOIN sys_menu sm on smr.menuID=sm.id
+        ) a on sr.id=a.rightID*/
+        <where>
+            <if test="t!=null">
+                <include refid="searchWhere" />
+            </if>
+        </where>
+        LIMIT #{startIndex},#{len}
+    </select>-->
+
 </mapper>

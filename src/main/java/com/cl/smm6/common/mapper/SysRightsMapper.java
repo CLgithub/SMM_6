@@ -34,4 +34,6 @@ public interface SysRightsMapper extends BaseMapper<SysRights> {
 	 * @param rids 权限id数组
 	 */
 	void addUserRight(@Param("uids") String[] uids, @Param("rids") String[] rids);
+
+
 }
