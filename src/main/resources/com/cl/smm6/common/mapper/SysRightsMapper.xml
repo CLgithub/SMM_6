@@ -115,83 +115,108 @@
     where id = #{id,jdbcType=INTEGER}
   </update>
 
-	<!-- 得到最大权限位 -->
-	<select id="getMaxRigthPos" resultType="java.lang.Integer">
-		select max(rightpos) from sys_rights;
-	</select>
+  <!-- 得到最大权限位 -->
+  <select id="getMaxRigthPos" resultType="java.lang.Integer">
+      select max(rightpos) from sys_rights;
+  </select>
 
-    <!--根据用户id得到其拥有的权限-->
-    <resultMap id="resultMap1" type="java.util.Map">
-      <id column="id" property="id" jdbcType="INTEGER" />
-      <result column="userID" property="userID" jdbcType="INTEGER" />
-      <result column="rightID" property="rightID" jdbcType="INTEGER" />
-      <result column="righturl" property="righturl" jdbcType="VARCHAR" />
-      <result column="rightname" property="rightname" jdbcType="VARCHAR" />
-      <result column="rigthdesc" property="rightdesc" jdbcType="VARCHAR" />
-      <result column="rightpos" property="rightpos" jdbcType="INTEGER" />
-      <result column="rightcode" property="rightcode" jdbcType="INTEGER" />
-      <result column="common" property="common" jdbcType="INTEGER" />
-    </resultMap>
-    <select id="getRightByUser" resultMap="resultMap1">
-      SELECT * from sys_user_right sur LEFT JOIN sys_rights sr on sur.rightID=sr.id
-      WHERE sr.common='0' and sur.userID =#{uid}
-    </select>
-
-    <!--根据用户ids，删除权限-->
-    <delete id="delUserRight" parameterType="java.lang.Integer">
-     DELETE from sys_user_right WHERE userID in
-     <foreach collection="ids" index="index" item="item" open="(" separator="," close=")">
-       #{item}
-     </foreach>
-    </delete>
-
-    <!--给这些用户添加这些权限-->
-    <insert id="addUserRight" parameterType="java.lang.Integer">
-      INSERT INTO sys_user_right(userID,rightID) values
-      <foreach collection="rids" index="index1" item="rid" separator=",">
-          <foreach collection="uids" index="index2" item="uid" separator=",">
-            (#{uid},#{rid})
-          </foreach>
-      </foreach>
-    </insert>
-
-    <sql id="searchWhere" >
-      name LIKE #{t.name}
-    </sql>
-    <!--根据条件查询符合条件的总记录数-->
+  <!--根据用户id得到其拥有的权限-->
   <resultMap id="resultMap1" type="java.util.Map">
     <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="userID" property="userID" jdbcType="INTEGER" />
+    <result column="rightID" property="rightID" jdbcType="INTEGER" />
     <result column="righturl" property="righturl" jdbcType="VARCHAR" />
     <result column="rightname" property="rightname" jdbcType="VARCHAR" />
-    <result column="rightdesc" property="rightdesc" jdbcType="VARCHAR" />
+    <result column="rigthdesc" property="rightdesc" jdbcType="VARCHAR" />
     <result column="rightpos" property="rightpos" jdbcType="INTEGER" />
     <result column="rightcode" property="rightcode" jdbcType="INTEGER" />
-    <!--<result column="common" property="common" jdbcType="BIT" />-->
-    <result column="rightID" property="rightID" jdbcType="INTEGER" />
-    <result column="smid" property="smid" jdbcType="INTEGER" />
-    <result column="menuName" property="menuName" jdbcType="VARCHAR" />
+    <result column="common" property="common" jdbcType="INTEGER" />
   </resultMap>
-  <!--查询满足条件的记录-->
-    <select id="getAllRow" resultType="java.lang.Integer">
-        SELECT count(1) from sys_rights
-        <where>
-          <if test="t!=null">
-            <include refid="searchWhere" />
-          </if>
-        </where>
-    </select>
-   <!-- <select id="getTListBySearch" resultType="com.cl.smm6.common.entity.SysRights">
-        SELECT  * from sys_rights
-        /*SELECT * from sys_rights sr left join(
-          SELECT smr.rightID as rightID, sm.id as smid,sm.menuName as menuName
-            FROM sys_menu_right smr left JOIN sys_menu sm on smr.menuID=sm.id
-        ) a on sr.id=a.rightID*/
-        <where>
-            <if test="t!=null">
-                <include refid="searchWhere" />
-            </if>
-        </where>
-        LIMIT #{startIndex},#{len}
-    </select>-->
+  <select id="getRightByUser" resultMap="resultMap1">
+    SELECT * from sys_user_right sur LEFT JOIN sys_rights sr on sur.rightID=sr.id
+    WHERE sr.common='0' and sur.userID =#{uid}
+  </select>
 
+  <!--根据用户ids，删除权限-->
+  <delete id="delUserRight" parameterType="java.lang.Integer">
+   DELETE from sys_user_right WHERE userID in
+   <foreach collection="ids" index="index" item="item" open="(" separator="," close=")">
+     #{item}
+   </foreach>
+  </delete>
+
+  <!--给这些用户添加这些权限-->
+  <insert id="addUserRight" parameterType="java.lang.Integer">
+    INSERT INTO sys_user_right(userID,rightID) values
+    <foreach collection="rids" index="index1" item="rid" separator=",">
+        <foreach collection="uids" index="index2" item="uid" separator=",">
+          (#{uid},#{rid})
+        </foreach>
+    </foreach>
+  </insert>
+
+  <sql id="searchWhere" >
+    righturl = #{t.righturl}
+  </sql>
+
+  <!--根据条件查询符合条件的总记录数-->
+  <!--查询满足条件的记录-->
+  <select id="getAllRow" resultType="java.lang.Integer">
+      SELECT count(1) from sys_rights
+      <where>
+        <if test="t!=null">
+          <include refid="searchWhere" />
+        </if>
+      </where>
+  </select>
+  <select id="getTListBySearch" resultMap="resultMap1">
+      SELECT * from sys_rights sr left join(
+        SELECT smr.rightID as rightID, sm.id as smid,sm.menuName as menuName
+          FROM sys_menu_right smr left JOIN sys_menu sm on smr.menuID=sm.id
+      ) a on sr.id=a.rightID
+      <where>
+          <if test="t!=null">
+              <include refid="searchWhere" />
+          </if>
+      </where>
+      LIMIT #{startIndex},#{len}
+  </select>
+
+  <!--根据url得到权限对象-->
+  <select id="getRightByUrl" resultType="com.cl.smm6.common.entity.SysRights">
+     select * from sys_rights WHERE righturl=#{righturl}
+  </select>
+
+  <!--修改权限所属菜单-->
+  <delete id="delMenuRight"   >
+    delete from sys_menu_right WHERE rightId in
+      <foreach collection="rids" index="index" item="rid" open="(" separator="," close=")">
+        #{rid}
+      </foreach>
+  </delete>
+  <insert id="setMenuRgithu" >
+     INSERT INTO sys_menu_right(menuID,rightID) VALUES(#{smid},#{rid})
+  </insert>
+  
+  <!--根据用户ids数组删除用户权限-->
+  <delete id="deleteRightsByIDs" >
+    DELETE from sys_rights WHERE id in
+    <foreach collection="rids" index="index" item="rid" open="(" separator="," close=")">
+      #{rid}
+    </foreach>
+  </delete>
+  
+  <!--查询所以权限-->
+  <select id="getAllList" resultType="com.cl.smm6.common.entity.SysRights">
+    select * from sys_rights
+  </select>
+
+  <!--得到最大权限位及最大权限位上的权限码-->
+  <resultMap id="maxPmaxC" type="java.util.Map" >
+    <result column="maxP" property="maxP" jdbcType="INTEGER" />
+    <result column="maxC" property="maxC" jdbcType="INTEGER" />
+  </resultMap>
+  <select id="getMaxRPosAndMaxRCode" resultMap="maxPmaxC">
+    select max(rightpos) as maxP,max(rightcode) maxC from sys_rights where rightpos=(select max(rightpos) from sys_rights)
+  </select>
 </mapper>

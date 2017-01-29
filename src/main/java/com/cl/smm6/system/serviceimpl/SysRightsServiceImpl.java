@@ -15,6 +15,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import static org.aspectj.util.LangUtil.split;
+
 @Service
 public class SysRightsServiceImpl extends BaseServiceImpl<SysRights> implements SysRightsService {
 
@@ -29,9 +31,10 @@ public class SysRightsServiceImpl extends BaseServiceImpl<SysRights> implements 
 	@Resource
 	private SysUserService sysUserService;
 
+
 	@Override
 	public List<SysRights> getAlllist() {
-		return this.selectListTBySql("SELECT * from sys_rights");
+	    return sysRightsMapper.getAllList();
 	}
 
 	@Override
@@ -41,21 +44,21 @@ public class SysRightsServiceImpl extends BaseServiceImpl<SysRights> implements 
 
 	@Override
 	public boolean appendRigheByURL(String url, String rightname, String rightdesc, Boolean common) {
-		String sql1 = "SELECT COUNT(1) as count FROM sys_rights WHERE righturl=?";
-		List<HashMap<String, Object>> list = this.selectListMapBySql(sql1, url);
-		long count = (long) (list.get(0).get("count"));
-		if (count == 0) {
+        SysRights sysRights1 = new SysRights();
+        sysRights1.setRighturl(url);
+        Integer count=sysRightsMapper.getAllRow(sysRights1);
+        if (count == 0) {
 			SysRights sysRights = new SysRights();
 			sysRights.setRighturl(url);
 			// 处理权限位和权限码
-		int rightPos = 0;
+		    int rightPos = 0;
 			long rightCode = 1;
 			// 查询最大权限位上的最大权限码
-			String sql2 = "SELECT MAX(r.rightpos) as maxPos, MAX(r.rightcode)as maxCode from sys_rights r WHERE r.rightpos=(SELECT MAX(rr.rightpos) FROM sys_rights rr)";
-			List<HashMap<String, Object>> list2 = this.selectListMapBySql(sql2);
-			Integer topRightPos = (Integer) list2.get(0).get("maxPos");
-			Long topRightCode = (Long) list2.get(0).get("maxCode");
-			if (topRightPos == null) {// 如果当前权限表为空
+			List<Map<String,Object>> list3=sysRightsMapper.getMaxRPosAndMaxRCode();
+            Integer topRightPos= (Integer) list3.get(0).get("maxP");
+            Long topRightCode= (Long) list3.get(0).get("maxC");
+
+            if (topRightPos == null) {// 如果当前权限表为空
 				rightPos = 0;
 				rightCode = 1;
 			} else {
@@ -83,17 +86,7 @@ public class SysRightsServiceImpl extends BaseServiceImpl<SysRights> implements 
 
 	@Override
 	public PageBean getRightPBBySearch(Integer page, Integer rows, String searchWhere) {
-		String sql = "SELECT * from sys_rights sr left join(SELECT smr.rightID as rightID, sm.id as smid,sm.menuName as menuName "
-				+ " FROM sys_menu_right smr left JOIN sys_menu sm on smr.menuID=sm.id) a on sr.id=a.rightID WHERE 1=1 "
-				+ "and (righturl LIKE '%"
-				+ searchWhere + "%' OR rightname LIKE '%" + searchWhere + "%' OR rightdesc LIKE '%" + searchWhere
-				+ "%' OR common LIKE '%" + searchWhere + "%') ORDER BY id ";
-//		System.out.println(sql);
-		PageBean pageBean=this.getPageBean(page,rows,null);
-		System.out.println(pageBean);
-		PageBean pageBean1=this.getPageBean(Constant.PAGEBEANTYPE_MAP, sql, page, rows);
-		System.out.println(pageBean1);
-		return pageBean1;
+		return this.getPageBean(page,rows,null);
 	}
 
 	@Override
@@ -103,18 +96,18 @@ public class SysRightsServiceImpl extends BaseServiceImpl<SysRights> implements 
 		if (null == sysRights.getId() && this.appendRigheByURL(sysRights.getRighturl(), sysRights.getRightname(),
 				sysRights.getRightdesc(), sysRights.getCommon())) {
 			// 如果新增成功，这查询其id，设置其所属页面
-			String sql1 = "SELECT id from sys_rights WHERE righturl = ?";
-			List<HashMap<String, Object>> list = this.selectListMapBySql(sql1, sysRights.getRighturl());
-			rid = (Integer) list.get(0).get("id");
+			SysRights sysRights1=sysRightsMapper.getRightByUrl(sysRights.getRighturl());
+			rid=sysRights1.getId();
 		} else if (this.updateByPrimaryKeySelective(sysRights) == 1) {// 不是新增就尝试去修改，并且修改成功设置rid
 			rid = sysRights.getId();
 		}
 		if (null != rid) {
-			String sql2 = "delete from sys_menu_right where rightID=?";
-			this.executeSql(sql2, rid);
-			if (null != smid) {
-				String sql3 = "INSERT INTO sys_menu_right(menuID,rightID) VALUES(?,?)";
-				this.executeSql(sql3, smid, rid);
+		    String[] rids=new String[1];
+		    rids[0]=rid.toString();
+		    //修改权限所属菜单
+			sysRightsMapper.delMenuRight(rids);
+			if(null!=smid){
+				sysRightsMapper.setMenuRgithu(rid,smid);
 			}
 			return true;
 		} else {
@@ -124,14 +117,12 @@ public class SysRightsServiceImpl extends BaseServiceImpl<SysRights> implements 
 
 	@Override
 	public boolean deleteRightsByIDs(String idTxts) {
-		idTxts = "'" + idTxts + "'";
-		idTxts = idTxts.replaceAll(",", "','");
-		String sql = "DELETE from sys_rights WHERE id in(" + idTxts + ")";
-		if (this.executeSql(sql) != 0) {
-			return true;
-		} else {
-			return false;
-		}
+		String[] ids=idTxts.split(",");
+        //删除改权限与菜单的关系
+        sysRightsMapper.delMenuRight(ids);
+        //删除权限本身
+		sysRightsMapper.deleteRightsByIDs(ids);
+        return true;
 	}
 
 	@Override

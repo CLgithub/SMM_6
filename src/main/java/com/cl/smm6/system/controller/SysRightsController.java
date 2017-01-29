@@ -45,7 +45,7 @@ public class SysRightsController {
 	 * @author L
 	 * @date 2016年1月20日
 	 * @param sysRights
-	 * @param SSmenu 该权限所属菜单ID
+	 * @param smid 该权限所属菜单ID
 	 * @return true:成功,false:失败,失败原因
 	 */
 	@RequestMapping(value = "saveOrUpdate")
