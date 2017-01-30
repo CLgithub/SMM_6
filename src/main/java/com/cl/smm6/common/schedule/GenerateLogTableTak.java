@@ -27,13 +27,11 @@ public class GenerateLogTableTak extends QuartzJobBean {
 	@Override
 	protected void executeInternal(JobExecutionContext arg0) throws JobExecutionException {
 		String tableName = LogUtil.generateLogTableName(1);
-		String sql = "create table if not exists " + tableName + " like sys_log";
-		sysLogService.executeSql(sql);
+		sysLogService.createLogTab(tableName);
 		System.out.println(tableName + " 生成了! ");
 
 		tableName = LogUtil.generateLogTableName(2);
-		sql = "create table if not exists " + tableName + " like sys_log";
-		sysLogService.executeSql(sql);
+		sysLogService.createLogTab(tableName);
 		System.out.println(tableName + " 生成了! ");
 	}
 

@@ -25,12 +25,9 @@ public class IniLogTablesListener implements ApplicationListener {
 	public void onApplicationEvent(ApplicationEvent event) {
 		// 是否是上下文刷新事件
 		if (event instanceof ContextRefreshedEvent) {
-			String sql = "create table if not exists " + LogUtil.generateLogTableName(0) + " like sys_log";
-			sysLogService.executeSql(sql);
-			sql = "create table if not exists " + LogUtil.generateLogTableName(1) + " like sys_log";
-			sysLogService.executeSql(sql);
-			sql = "create table if not exists " + LogUtil.generateLogTableName(2) + " like sys_log";
-			sysLogService.executeSql(sql);
+			sysLogService.createLogTab(LogUtil.generateLogTableName(0) );
+			sysLogService.createLogTab(LogUtil.generateLogTableName(1) );
+			sysLogService.createLogTab(LogUtil.generateLogTableName(2) );
 			System.out.println("日志表初始化完成!!!");
 		}
 	}

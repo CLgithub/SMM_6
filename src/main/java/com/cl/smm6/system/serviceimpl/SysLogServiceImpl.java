@@ -39,4 +39,9 @@ public class SysLogServiceImpl extends BaseServiceImpl<SysLog> implements SysLog
 		return pageBean;
 	}
 
+	@Override
+	public void createLogTab(String tabName) {
+		sysLogMapper.createLogTab(tabName);
+	}
+
 }

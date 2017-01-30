@@ -39,4 +39,10 @@ public interface SysLogMapper extends BaseMapper<SysLog> {
      * @param tableName 当月日志表名
      */
     void insertD(@Param("t") SysLog t, @Param("tableName") String tableName);
+
+    /**
+     * 创建日志表
+     * @param tabName 表名
+     */
+    void createLogTab(@Param("tabName") String tabName);
 }

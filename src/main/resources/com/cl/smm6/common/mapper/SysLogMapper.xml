@@ -162,4 +162,9 @@
       #{t.opername,jdbcType=VARCHAR}, #{t.operparams,jdbcType=VARCHAR}, #{t.operresult,jdbcType=VARCHAR},
       #{t.resultmsg,jdbcType=VARCHAR})
   </insert>
+
+  <!--创建日志表-->
+  <update id="createLogTab" >
+    create table if not exists ${tabName} like sys_log
+  </update>
 </mapper>

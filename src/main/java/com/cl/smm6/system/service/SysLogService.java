@@ -31,4 +31,9 @@ public interface SysLogService extends BaseService<SysLog> {
 	PageBean getLogsPBBySearch(Integer page, Integer rows, String startTime, String endTime, String searchOperator,
 			String searchOpername, String operresult);
 
+	/**
+	 * 创建日志表
+	 * @param tabName
+	 */
+    void createLogTab(String tabName);
 }
