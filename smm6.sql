@@ -47,7 +47,7 @@ CREATE TABLE `sys_log` (
   `operName` varchar(255) DEFAULT NULL,
   `operParams` varchar(255) DEFAULT NULL,
   `operResult` varchar(255) DEFAULT NULL,
-  `resultMsg` varchar(1024) DEFAULT NULL,
+  `resultMsg` varchar(10240) DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
@@ -153,7 +153,7 @@ CREATE TABLE `sys_user_right` (
 --  Records of `sys_user_right`
 -- ----------------------------
 BEGIN;
-INSERT INTO `sys_user_right` VALUES ('3', '3');
+INSERT INTO `sys_user_right` VALUES ('23', '1'), ('23', '2'), ('3', '3'), ('23', '3'), ('23', '4'), ('23', '5'), ('23', '6'), ('23', '8'), ('23', '9'), ('23', '10'), ('23', '12'), ('23', '13'), ('23', '15'), ('23', '16'), ('23', '21'), ('23', '22'), ('23', '24'), ('23', '25'), ('23', '27'), ('23', '29'), ('23', '30'), ('23', '31');
 COMMIT;
 
 -- ----------------------------
