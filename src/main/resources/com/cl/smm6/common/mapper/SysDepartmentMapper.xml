@@ -79,4 +79,60 @@
       status = #{status,jdbcType=INTEGER}
     where depcode = #{depcode,jdbcType=INTEGER}
   </update>
+
+  <sql id="searchWhere" >
+    name LIKE #{t.name}
+  </sql>
+  <!--根据条件查询符合条件的总记录数-->
+  <select id="getAllRow" resultType="java.lang.Integer">
+    SELECT count(1) from sys_department
+    <where>
+      <if test="t!=null">
+        <include refid="searchWhere" />
+      </if>
+    </where>
+  </select>
+
+  <!--查询满足条件的记录-->
+  <resultMap id="resultMap1" type="java.util.Map">
+    <result column="depCode" property="depcode" jdbcType="VARCHAR" />
+    <result column="depname" property="depname" jdbcType="VARCHAR" />
+    <result column="parentcode" property="_parentId" jdbcType="VARCHAR" />
+    <result column="status" property="status" jdbcType="INTEGER" />
+  </resultMap>
+  <select id="getTListBySearch" resultMap="resultMap1">
+    select depCode, depname, parentcode, status from sys_department
+    <where>
+      <if test="t!=null">
+        <include refid="searchWhere" />
+      </if>
+    </where>
+    LIMIT #{startIndex},#{len}
+  </select>
+
+  <!--得到该部门最大的子部门code-->
+  <select id="getMaxCDepCode" resultType="java.lang.Integer" >
+    select max(depcode) as depcode from sys_department where parentCode=#{code}
+  </select>
+
+  <!--修改部门，编号修改为制定编号-->
+  <update id="updateByPrimaryCode" >
+    update sys_department set depcode=#{depCode},depname=#{t.depname},parentCode=#{t.parentcode},status=#{t.status} where depcode=#{t.depcode}
+  </update>
+
+  <!--修改其子部门父code设置为0-->
+  <update id="updateCcode" >
+    update sys_department set parentCode='0' where parentCode=#{depCode}
+  </update>
+
+  <!--得到该部门及其一下部门-->
+  <resultMap id="getUserDepListRmp" type="java.util.Map">
+    <id column="depcode" property="id" jdbcType="INTEGER" />
+    <result column="depname" property="text" jdbcType="VARCHAR" />
+    <result column="parentCode" property="_parentId" jdbcType="VARCHAR" />
+    <result column="start" property="start" jdbcType="INTEGER" />
+  </resultMap>
+  <select id="getUserDepList" resultMap="getUserDepListRmp" >
+    select depcode ,depname ,parentCode ,status from sys_department where depcode LIKE CONCAT(#{depCode0},'%')
+  </select>
 </mapper>

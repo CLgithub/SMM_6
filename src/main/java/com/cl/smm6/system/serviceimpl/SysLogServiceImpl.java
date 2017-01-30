@@ -1,18 +1,12 @@
 package com.cl.smm6.system.serviceimpl;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
-
 import javax.annotation.Resource;
-
 import com.cl.smm6.common.mapper.SysLogMapper;
 import org.springframework.stereotype.Service;
-
 import com.cl.smm6.common.entity.SysLog;
 import com.cl.smm6.common.mapperbase.BaseMapper;
 import com.cl.smm6.common.servicebase.BaseServiceImpl;
-import com.cl.smm6.common.uitl.Constant;
 import com.cl.smm6.common.uitl.LogUtil;
 import com.cl.smm6.common.uitl.PageBean;
 import com.cl.smm6.system.service.SysLogService;

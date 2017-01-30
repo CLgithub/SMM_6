@@ -40,4 +40,5 @@ public class SysDepartment extends BaseEntity{
     public void setStatus(Integer status) {
         this.status = status;
     }
+
 }
