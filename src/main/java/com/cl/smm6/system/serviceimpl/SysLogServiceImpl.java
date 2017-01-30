@@ -6,6 +6,7 @@ import java.util.Map;
 
 import javax.annotation.Resource;
 
+import com.cl.smm6.common.mapper.SysLogMapper;
 import org.springframework.stereotype.Service;
 
 import com.cl.smm6.common.entity.SysLog;
@@ -24,57 +25,24 @@ public class SysLogServiceImpl extends BaseServiceImpl<SysLog> implements SysLog
 		super.setBaseMapper(baseMapper);
 	}
 
+	@Resource
+	SysLogMapper sysLogMapper;
+
 	@Override
 	public void insert0(SysLog t) {
-		String sql = "insert into " + LogUtil.generateLogTableName(0)
-				+ "(operator,opertime,opername,operparams,operresult,resultmsg) values(?,?,?,?,?,?)";
-		this.executeSql(sql, t.getOperator(), t.getOpertime(), t.getOpername(), t.getOperparams(), t.getOperresult(),
-				t.getResultmsg());
+		sysLogMapper.insertD(t,LogUtil.generateLogTableName(0));
 	}
 
 	@Override
 	public PageBean getLogsPBBySearch(Integer page, Integer rows, String startTime, String endTime,
 			String searchOperator, String searchOpername, String operresult) {
-		String sql2 = "";
-		String search = "";
-		if ("".equals(startTime) && "".equals(endTime)) {
-			String table0 = LogUtil.generateLogTableName(0);
-			sql2 = "SELECT * FROM " + table0 + " where 1=1 ";
-			if (!"".equals(searchOperator)) {
-				search += " and operator like '%" + searchOperator + "%'";
-			}
-			if (!"".equals(searchOpername)) {
-				search += " and opername like '%" + searchOpername + "%'";
-			}
-			if (!"all".equals(operresult)) {
-				search += " and operresult ='" + operresult + "'";
-			}
-			sql2 = sql2 + search + " ORDER BY operTime desc";
-		} else {
-			String sql1 = "SHOW OPEN TABLES WHERE `table` LIKE '%sys_log_%'";
-			List<HashMap<String, Object>> list = this.selectListMapBySql(sql1);
-			for (HashMap<String, Object> map : list) {
-				sql2 = sql2 + " UNION SELECT * FROM " + map.get("Table") + " where 1=1 ";
-				if (!"".equals(startTime)) {
-					search += " and operTime>='" + startTime + "'";
-				}
-				if (!"".equals(endTime)) {
-					search += " and operTime<='" + endTime + "'";
-				}
-				if (!"".equals(searchOperator)) {
-					search += " and operator like '%" + searchOperator + "%'";
-				}
-				if (!"".equals(searchOpername)) {
-					search += " and opername like '%" + searchOpername + "%'";
-				}
-				if (!"all".equals(operresult)) {
-					search += " and operresult ='" + operresult + "'";
-				}
-				sql2 = sql2 + search;
-			}
-			sql2 = sql2.replaceFirst(" UNION", "SELECT * FROM(") + ") a ORDER BY operTime desc";
-		}
-		return this.getPageBean(Constant.PAGEBEANTYPE_T, sql2, page, rows);
+		List<String> logTabNames = sysLogMapper.getLogTabNames();
+		Integer allRow = sysLogMapper.getTotla(logTabNames,(page-1)*rows,rows,null);// 得到总的记录长度
+		List<SysLog> list= sysLogMapper.getTListBySearch(logTabNames,(page-1)*rows,rows,null);
+		PageBean pageBean = new PageBean();
+		pageBean.setTotal(allRow);
+		pageBean.setRows(list);
+		return pageBean;
 	}
 
 }
