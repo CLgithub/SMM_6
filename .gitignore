@@ -10,6 +10,7 @@ data.db
 .settings/
 bin/
 build/
+out/
 
 # Folder config file
 Desktop.ini

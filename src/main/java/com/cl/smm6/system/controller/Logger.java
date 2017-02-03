@@ -36,7 +36,9 @@ public class Logger {
 		try {
 			RequestAttributes ra = RequestContextHolder.getRequestAttributes();
 			HttpServletRequest request = ((ServletRequestAttributes) ra).getRequest();
-			SysUser sysUser = (SysUser) request.getSession().getAttribute("sysUser");
+//			SysUser sysUser = (SysUser) request.getSession().getAttribute("sysUser");
+            SysUser sysUser=new SysUser();
+            sysUser.setName("p");
 			if (sysUser != null) {
 				log.setOperator(sysUser.toString());// 设置操作人
 				String methodName = pjp.getSignature().getName();
@@ -54,6 +56,7 @@ public class Logger {
 			log.setOperresult("failure");
 			log.setResultmsg(e.getMessage());
 		} finally {
+			System.out.println(log);
 			sysLogService.insert0(log);
 		}
 		return null;

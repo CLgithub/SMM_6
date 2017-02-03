@@ -21,32 +21,32 @@
 	<url>http://maven.apache.org</url>
 
 	<!-- 私服 -->
-	<repositories>
-		<repository>
-			<snapshots>
-				<enabled>false</enabled>
-			</snapshots>
-			<id>public</id>
-			<name>Public Repositories</name>
-			<url>http://192.168.182.87:8081/nexus/content/groups/public/</url>
-			<layout>default</layout>
-		</repository>
-	</repositories>
-	<!--maven的生命周期插件的下载地址 -->
-	<pluginRepositories>
-		<pluginRepository>
-			<releases>
-				<updatePolicy>never</updatePolicy>
-			</releases>
-			<id>public</id>
-			<name>Public Repositories</name>
-			<url>http://192.168.182.87:8081/nexus/content/groups/public/</url>
-			<layout>default</layout>
-			<snapshots>
-				<enabled>false</enabled>
-			</snapshots>
-		</pluginRepository>
-	</pluginRepositories>
+	<!--<repositories>-->
+		<!--<repository>-->
+			<!--<snapshots>-->
+				<!--<enabled>false</enabled>-->
+			<!--</snapshots>-->
+			<!--<id>public</id>-->
+			<!--<name>Public Repositories</name>-->
+			<!--<url>http://192.168.182.87:8081/nexus/content/groups/public/</url>-->
+			<!--<layout>default</layout>-->
+		<!--</repository>-->
+	<!--</repositories>-->
+	<!--&lt;!&ndash;maven的生命周期插件的下载地址 &ndash;&gt;-->
+	<!--<pluginRepositories>-->
+		<!--<pluginRepository>-->
+			<!--<releases>-->
+				<!--<updatePolicy>never</updatePolicy>-->
+			<!--</releases>-->
+			<!--<id>public</id>-->
+			<!--<name>Public Repositories</name>-->
+			<!--<url>http://192.168.182.87:8081/nexus/content/groups/public/</url>-->
+			<!--<layout>default</layout>-->
+			<!--<snapshots>-->
+				<!--<enabled>false</enabled>-->
+			<!--</snapshots>-->
+		<!--</pluginRepository>-->
+	<!--</pluginRepositories>-->
 	
 	<properties>
 		<spring>4.3.2.RELEASE</spring>
@@ -220,11 +220,29 @@
 		</dependency>
 		
 		<!-- ehcache -->
+		<!--<dependency>-->
+			<!--<groupId>org.ehcache.modules</groupId>-->
+			<!--<artifactId>ehcache-core</artifactId>-->
+			<!--<version>${ehcache-core}</version>-->
+		<!--</dependency>-->
+		<!--<dependency>-->
+			<!--<groupId>org.mybatis</groupId>-->
+			<!--<artifactId>mybatis-ehcache</artifactId>-->
+			<!--<version>1.0.0</version>-->
+		<!--</dependency>-->
 		<dependency>
-			<groupId>org.ehcache.modules</groupId>
-			<artifactId>ehcache-core</artifactId>
-			<version>${ehcache-core}</version>
+			<groupId>net.sf.ehcache</groupId>
+			<artifactId>ehcache</artifactId>
+			<version>2.10.3</version>
 		</dependency>
+
+		<!--<dependency>-->
+			<!--<groupId>org.ehcache</groupId>-->
+			<!--<artifactId>ehcache</artifactId>-->
+			<!--<version>3.2.0</version>-->
+		<!--</dependency>-->
+
+
 	</dependencies>
 
 

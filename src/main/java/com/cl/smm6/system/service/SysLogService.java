@@ -21,15 +21,9 @@ public interface SysLogService extends BaseService<SysLog> {
 	 * @author L ＊ @date 2016年1月7日
 	 * @param page 第几页
 	 * @param rows 每页多少条
-	 * @param startTime 开始时间
-	 * @param endTime 截至时间
-	 * @param searchOperator 操作人
-	 * @param searchOpername 操作方法
-	 * @param operresult 操作结果
 	 * @return
 	 */
-	PageBean getLogsPBBySearch(Integer page, Integer rows, String startTime, String endTime, String searchOperator,
-			String searchOpername, String operresult);
+	PageBean getLogsPBBySearch(Integer page, Integer rows);
 
 	/**
 	 * 创建日志表

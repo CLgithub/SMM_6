@@ -3,6 +3,8 @@ package com.cl.smm6.system.serviceimpl;
 import java.util.List;
 import javax.annotation.Resource;
 import com.cl.smm6.common.mapper.SysLogMapper;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import com.cl.smm6.common.entity.SysLog;
 import com.cl.smm6.common.mapperbase.BaseMapper;
@@ -20,16 +22,17 @@ public class SysLogServiceImpl extends BaseServiceImpl<SysLog> implements SysLog
 	}
 
 	@Resource
-	SysLogMapper sysLogMapper;
+	private SysLogMapper sysLogMapper;
 
 	@Override
+	@CacheEvict(value = "sysParamCache",allEntries = true)
 	public void insert0(SysLog t) {
 		sysLogMapper.insertD(t,LogUtil.generateLogTableName(0));
 	}
 
 	@Override
-	public PageBean getLogsPBBySearch(Integer page, Integer rows, String startTime, String endTime,
-			String searchOperator, String searchOpername, String operresult) {
+	@Cacheable(value="sysParamCache")
+	public PageBean getLogsPBBySearch(Integer page, Integer rows) {
 		List<String> logTabNames = sysLogMapper.getLogTabNames();
 		Integer allRow = sysLogMapper.getTotla(logTabNames,(page-1)*rows,rows,null);// 得到总的记录长度
 		List<SysLog> list= sysLogMapper.getTListBySearch(logTabNames,(page-1)*rows,rows,null);
@@ -40,6 +43,7 @@ public class SysLogServiceImpl extends BaseServiceImpl<SysLog> implements SysLog
 	}
 
 	@Override
+	@CacheEvict(value = "sysParamCache",allEntries=true)
 	public void createLogTab(String tabName) {
 		sysLogMapper.createLogTab(tabName);
 	}

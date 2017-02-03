@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 @Controller
 @RequestMapping(value = "loginController")
@@ -32,12 +33,12 @@ public class LoginController {
 	 */
 	@RequestMapping(value = "doLogin")
 	@ResponseBody
-	public Object doLogin(String userName,String password,HttpServletRequest request) {
+	public Object doLogin(String userName,String password,HttpSession session) {
 		SysUser sysUser = sysUserService.doLogin(userName, password);
 		if (sysUser == null) {
 			return false;
 		} else {
-			request.getSession().setAttribute("sysUser", sysUser);
+			session.setAttribute("sysUser", sysUser);
 			return true;
 		}
 	}

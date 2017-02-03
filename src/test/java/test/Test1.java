@@ -4,13 +4,22 @@ import com.cl.smm6.common.entity.SysUser;
 import com.cl.smm6.common.mapper.SysLogMapper;
 import com.cl.smm6.common.mapper.SysRightsMapper;
 import com.cl.smm6.common.mapper.SysUserMapper;
+import com.cl.smm6.system.service.SysDepartmentService;
+import com.cl.smm6.system.service.SysLogService;
 import com.cl.smm6.system.service.SysRightsService;
 import com.cl.smm6.system.service.SysUserService;
+import com.cl.smm6.system.serviceimpl.SysDepartmentServiceImpl;
 import com.cl.smm6.system.serviceimpl.SysUserServiceImpl;
+import com.sun.xml.internal.bind.v2.runtime.reflect.Accessor;
+import org.apache.ibatis.session.SqlSessionFactory;
+import org.apache.ibatis.session.SqlSessionFactoryBuilder;
+import org.springframework.cache.CacheManager;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
+import javax.lang.model.element.Element;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 
@@ -40,7 +49,20 @@ public class Test1 {
     }
 
     public static void main(String[] args){
-        test1();
+        getSettUnitBySettUnitIdTest();
     }
+
+
+    public static void getSettUnitBySettUnitIdTest() {
+        ApplicationContext applicationContext=new ClassPathXmlApplicationContext("spring-context.xml");
+        SysLogService syslogmapper= (SysLogService) applicationContext.getBean("sysLogServiceImpl");
+        SysDepartmentService SysDepartmentServiceImpl= (SysDepartmentService) applicationContext.getBean("sysDepartmentServiceImpl");
+
+        System.out.println(syslogmapper.getLogsPBBySearch(1,21));
+        System.out.println(syslogmapper.getLogsPBBySearch(1,21));
+        System.out.println(SysDepartmentServiceImpl);
+
+    }
+
 
 }

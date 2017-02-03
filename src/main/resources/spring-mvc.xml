@@ -16,12 +16,12 @@
 	
 	
 
-	<mvc:interceptors>
-		<!-- 注册捕获rul拦截器bean -->
-		<!-- <bean id="CatchUrlInterceptor" class="com.cl.smm6.common.interceptor.CatchUrlInterceptor" /> -->
-		<!-- 注册自定义权限拦截器bean -->
+	<!--<mvc:interceptors>
+		&lt;!&ndash; 注册捕获rul拦截器bean &ndash;&gt;
+		&lt;!&ndash; <bean id="CatchUrlInterceptor" class="com.cl.smm6.common.interceptor.CatchUrlInterceptor" /> &ndash;&gt;
+		&lt;!&ndash; 注册自定义权限拦截器bean &ndash;&gt;
 		<bean id="RightInterceptor" class="com.cl.smm6.common.interceptor.RightInterceptor" />
-	</mvc:interceptors>
+	</mvc:interceptors>-->
 	
 	<mvc:annotation-driven>
 		<mvc:message-converters>

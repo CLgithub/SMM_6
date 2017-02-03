@@ -33,8 +33,7 @@ public class SysLogsController {
 	@ResponseBody
 	public Object getPBBySearch(Integer page, Integer rows, String SearchOperator, String SearchOpername,
 			String startTime, String endTime, String operresult) {
-		return sysLogService.getLogsPBBySearch(page, rows, startTime, endTime, SearchOperator, SearchOpername,
-				operresult);
+		return sysLogService.getLogsPBBySearch(page, rows );
 	}
 
 }
