@@ -56,11 +56,17 @@ public class Test1 {
     public static void getSettUnitBySettUnitIdTest() {
         ApplicationContext applicationContext=new ClassPathXmlApplicationContext("spring-context.xml");
         SysLogService syslogmapper= (SysLogService) applicationContext.getBean("sysLogServiceImpl");
-        SysDepartmentService SysDepartmentServiceImpl= (SysDepartmentService) applicationContext.getBean("sysDepartmentServiceImpl");
+//        SysDepartmentService SysDepartmentServiceImpl= (SysDepartmentService) applicationContext.getBean("sysDepartmentServiceImpl");
+        SysRightsService sysRightsService= (SysRightsService) applicationContext.getBean("sysRightsServiceImpl");
 
-        System.out.println(syslogmapper.getLogsPBBySearch(1,21));
-        System.out.println(syslogmapper.getLogsPBBySearch(1,21));
-        System.out.println(SysDepartmentServiceImpl);
+        System.out.println(sysRightsService.getnum());
+//        System.out.println(sysRightsService.getMaxRightPos());
+
+
+
+//        System.out.println(syslogmapper.getLogsPBBySearch(1,21));
+//        System.out.println(syslogmapper.getLogsPBBySearch(1,21));
+//        System.out.println(SysDepartmentServiceImpl);
 
     }
 

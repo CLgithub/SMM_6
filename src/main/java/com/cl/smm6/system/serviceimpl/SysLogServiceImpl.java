@@ -25,13 +25,11 @@ public class SysLogServiceImpl extends BaseServiceImpl<SysLog> implements SysLog
 	private SysLogMapper sysLogMapper;
 
 	@Override
-	@CacheEvict(value = "sysParamCache",allEntries = true)
 	public void insert0(SysLog t) {
 		sysLogMapper.insertD(t,LogUtil.generateLogTableName(0));
 	}
 
 	@Override
-	@Cacheable(value="sysParamCache")
 	public PageBean getLogsPBBySearch(Integer page, Integer rows) {
 		List<String> logTabNames = sysLogMapper.getLogTabNames();
 		Integer allRow = sysLogMapper.getTotla(logTabNames,(page-1)*rows,rows,null);// 得到总的记录长度
@@ -43,7 +41,6 @@ public class SysLogServiceImpl extends BaseServiceImpl<SysLog> implements SysLog
 	}
 
 	@Override
-	@CacheEvict(value = "sysParamCache",allEntries=true)
 	public void createLogTab(String tabName) {
 		sysLogMapper.createLogTab(tabName);
 	}

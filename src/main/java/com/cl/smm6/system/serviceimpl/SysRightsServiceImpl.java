@@ -11,6 +11,7 @@ import com.cl.smm6.system.service.SysUserService;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -28,10 +29,6 @@ public class SysRightsServiceImpl extends BaseServiceImpl<SysRights> implements 
 	@Resource
 	private SysRightsMapper sysRightsMapper;
 	
-	@Resource
-	private SysUserService sysUserService;
-
-
 	@Override
 	public List<SysRights> getAlllist() {
 	    return sysRightsMapper.getAllList();
@@ -39,7 +36,7 @@ public class SysRightsServiceImpl extends BaseServiceImpl<SysRights> implements 
 
 	@Override
 	public int getMaxRightPos() {
-		return sysRightsMapper.getMaxRigthPos();
+		return sysRightsMapper.getMaxRightPos();
 	}
 
 	@Override
@@ -140,6 +137,11 @@ public class SysRightsServiceImpl extends BaseServiceImpl<SysRights> implements 
 	public List<Map<String, Object>> getRightByUser(Integer uid) {
 		List<Map<String,Object>> listMap=sysRightsMapper.getRightByUser(uid);
 		return listMap;
+	}
+
+	@Override
+	public int getnum() {
+		return 2;
 	}
 
 }

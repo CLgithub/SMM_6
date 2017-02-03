@@ -56,7 +56,6 @@ public class Logger {
 			log.setOperresult("failure");
 			log.setResultmsg(e.getMessage());
 		} finally {
-			System.out.println(log);
 			sysLogService.insert0(log);
 		}
 		return null;

@@ -13,7 +13,7 @@ public interface SysRightsMapper extends BaseMapper<SysRights> {
 	 * 得到最大权限位
 	 * @return
 	 */
-	int getMaxRigthPos();
+	int getMaxRightPos();
 
 	/**
 	 * 根据用户id得到其拥有的权限

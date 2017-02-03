@@ -14,7 +14,7 @@
 
 	<!-- Special objects setting. -->
 	<!-- Refresh sysParamCache every hour. -->
-	<cache name="sysParamCache"
+	<cache name="myCache1"
 		   overflowToDisk="false"
 		   eternal="false"
 		   diskPersistent="false"

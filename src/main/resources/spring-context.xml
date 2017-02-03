@@ -54,7 +54,23 @@
 		<property name="cacheManager" ref="ehcacheManagerFactory" />
 	</bean>
 	<!--启用Spring对基于注解的Cache的支持-->
-	<cache:annotation-driven cache-manager="ehcacheManager" />
+	<!--<cache:annotation-driven cache-manager="ehcacheManager" />-->
+
+    <!--配置缓存key生成策略-->
+	<bean id="cacheKeyGenerator" class="com.cl.smm6.common.gengrator.CacheKeyGenerator" />
+	<!--配置缓存增强-->
+	<cache:advice id="cacheAdvice" cache-manager="ehcacheManager" key-generator="cacheKeyGenerator" >
+        <cache:caching cache="myCache1">
+			<cache:cacheable method="get*" />
+			<cache:cacheable method="load*" />
+			<cache:cacheable method="find*"  />
+			<cache:cache-evict method="save*" all-entries="true" /> <!--清除缓存过于简单粗暴，待改进-->
+			<cache:cache-evict method="update*" all-entries="true" />
+			<cache:cache-evict method="delete*" all-entries="true" />
+			<cache:cache-evict method="new*" all-entries="true" />
+			<cache:cache-evict method="insert*" all-entries="true" />
+		</cache:caching>
+	</cache:advice>
 
 	<!-- (事务管理器)transaction manager -->
 	<bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
@@ -70,12 +86,9 @@
 			<tx:method name="delete*" propagation="REQUIRED" isolation="DEFAULT" />
 			<tx:method name="new*" propagation="REQUIRED" isolation="DEFAULT" />
 			<!-- 读 -->
-			<tx:method name="get*" propagation="REQUIRED" isolation="DEFAULT"
-				read-only="true" />
-			<tx:method name="load*" propagation="REQUIRED" isolation="DEFAULT"
-				read-only="true" />
-			<tx:method name="find*" propagation="REQUIRED" isolation="DEFAULT"
-				read-only="true" />
+			<tx:method name="get*" propagation="REQUIRED" isolation="DEFAULT" read-only="true" />
+			<tx:method name="load*" propagation="REQUIRED" isolation="DEFAULT" read-only="true" />
+			<tx:method name="find*" propagation="REQUIRED" isolation="DEFAULT" read-only="true" />
 			<!-- 通配 -->
 			<tx:method name="*" propagation="REQUIRED" isolation="DEFAULT" />
 		</tx:attributes>
@@ -88,6 +101,8 @@
 
 	<!-- aop配置  -->
 	<aop:config>
+		<!--缓存切入点-->
+		<aop:pointcut expression="execution(* *..*Service.*(..)))" id="cachePointCut" />
 		<!--事务切入点 -->
 		<aop:pointcut expression="execution(* *..*Service.*(..))" id="txPointCut" />
 		<!-- 日志切入点 -->
@@ -97,7 +112,9 @@
 								or execution(* *..*Service.batch*(..))
 								or execution(* *..*Service.set*(..))
 								or execution(* *..*Service.new*(..))) and !bean(sysLogService)" 
-					id="loggerPointcut"/> 
+					id="loggerPointcut"/>
+		<!--织入缓存切面-->
+        <aop:advisor advice-ref="cacheAdvice" pointcut-ref="cachePointCut" />
 		<!-- 织入事务切面 -->
 		<aop:advisor advice-ref="txAdvice" pointcut-ref="txPointCut" />
 		<!-- 织入日志切面 -->

@@ -4,6 +4,7 @@ import com.cl.smm6.common.entity.SysRights;
 import com.cl.smm6.common.servicebase.BaseService;
 import com.cl.smm6.common.uitl.PageBean;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -87,4 +88,5 @@ public interface SysRightsService extends BaseService<SysRights> {
 	 */
 	List<Map<String, Object>> getRightByUser(Integer uid);
 
+	int getnum();
 }

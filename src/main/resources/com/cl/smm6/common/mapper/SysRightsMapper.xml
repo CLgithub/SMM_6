@@ -116,8 +116,8 @@
   </update>
 
   <!-- 得到最大权限位 -->
-  <select id="getMaxRigthPos" resultType="java.lang.Integer">
-      select max(rightpos) from sys_rights;
+  <select id="getMaxRightPos" resultType="java.lang.Integer">
+      select max(rightpos) from sys_rights
   </select>
 
   <!--根据用户id得到其拥有的权限-->
