@@ -12,6 +12,10 @@ import java.util.Arrays;
 public class CacheKeyGenerator implements KeyGenerator{
     @Override
     public Object generate(Object target, Method method, Object... params) {
-        return method.toString()+ Arrays.toString(params);
+        MyKey myKey=new MyKey(target.getClass().getName(),method.getName(), Arrays.toString(params));
+        //会先去得到key的hashcode,
+        //      如果是cacheable,就比较当前的key是否equals已经有的,如果有就取缓存,没有就执行方法,
+        //      如果是cache-evict,就比较当前的key是否equals已经有的，如果有就除移已有的
+        return myKey;
     }
 }

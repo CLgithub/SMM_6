@@ -72,4 +72,17 @@ public class SysLog extends BaseEntity {
 	public void setResultmsg(String resultmsg) {
 		this.resultmsg = resultmsg == null ? null : resultmsg.trim();
 	}
+
+	@Override
+	public String toString() {
+		return "SysLog{" +
+				"id=" + id +
+				", operator='" + operator + '\'' +
+				", opertime=" + opertime +
+				", opername='" + opername + '\'' +
+				", operparams='" + operparams + '\'' +
+				", operresult='" + operresult + '\'' +
+				", resultmsg='" + resultmsg + '\'' +
+				'}';
+	}
 }

@@ -156,7 +156,9 @@
                 <include refid="searchWhere" />
             </if>
         </where>
+        order by name asc
         LIMIT #{startIndex},#{len}
+
     </select>
 
     <!--根据ids，删除用户-->

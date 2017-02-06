@@ -4,19 +4,13 @@ import com.cl.smm6.common.entity.SysRights;
 import com.cl.smm6.common.mapper.SysRightsMapper;
 import com.cl.smm6.common.mapperbase.BaseMapper;
 import com.cl.smm6.common.servicebase.BaseServiceImpl;
-import com.cl.smm6.common.uitl.Constant;
 import com.cl.smm6.common.uitl.PageBean;
 import com.cl.smm6.system.service.SysRightsService;
-import com.cl.smm6.system.service.SysUserService;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
-import static org.aspectj.util.LangUtil.split;
 
 @Service
 public class SysRightsServiceImpl extends BaseServiceImpl<SysRights> implements SysRightsService {
@@ -139,9 +133,5 @@ public class SysRightsServiceImpl extends BaseServiceImpl<SysRights> implements 
 		return listMap;
 	}
 
-	@Override
-	public int getnum() {
-		return 2;
-	}
 
 }

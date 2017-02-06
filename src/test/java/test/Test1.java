@@ -1,27 +1,15 @@
 package test;
 
-import com.cl.smm6.common.entity.SysUser;
+import com.cl.smm6.common.entity.SysLog;
 import com.cl.smm6.common.mapper.SysLogMapper;
-import com.cl.smm6.common.mapper.SysRightsMapper;
 import com.cl.smm6.common.mapper.SysUserMapper;
-import com.cl.smm6.system.service.SysDepartmentService;
 import com.cl.smm6.system.service.SysLogService;
-import com.cl.smm6.system.service.SysRightsService;
 import com.cl.smm6.system.service.SysUserService;
-import com.cl.smm6.system.serviceimpl.SysDepartmentServiceImpl;
-import com.cl.smm6.system.serviceimpl.SysUserServiceImpl;
-import com.sun.xml.internal.bind.v2.runtime.reflect.Accessor;
-import org.apache.ibatis.session.SqlSessionFactory;
-import org.apache.ibatis.session.SqlSessionFactoryBuilder;
-import org.springframework.cache.CacheManager;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
-import javax.lang.model.element.Element;
-import java.util.ArrayList;
-import java.util.Collection;
+import java.util.Date;
 import java.util.List;
-import java.util.Map;
 
 /**
  * Created by L on 17/1/3.
@@ -56,17 +44,29 @@ public class Test1 {
     public static void getSettUnitBySettUnitIdTest() {
         ApplicationContext applicationContext=new ClassPathXmlApplicationContext("spring-context.xml");
         SysLogService syslogmapper= (SysLogService) applicationContext.getBean("sysLogServiceImpl");
+        SysUserService sysUserService= (SysUserService) applicationContext.getBean("sysUserServiceImpl");
 //        SysDepartmentService SysDepartmentServiceImpl= (SysDepartmentService) applicationContext.getBean("sysDepartmentServiceImpl");
-        SysRightsService sysRightsService= (SysRightsService) applicationContext.getBean("sysRightsServiceImpl");
-
-        System.out.println(sysRightsService.getnum());
-//        System.out.println(sysRightsService.getMaxRightPos());
+//        SysRightsService sysRightsService= (SysRightsService) applicationContext.getBean("sysRightsServiceImpl");
 
 
+        System.out.println("第一次查询日志："+syslogmapper.getLogsPBBySearch(1,1));
+        System.out.println("第一次查询用户："+sysUserService.getUserPBBySearch(null,3,1,null));
 
-//        System.out.println(syslogmapper.getLogsPBBySearch(1,21));
-//        System.out.println(syslogmapper.getLogsPBBySearch(1,21));
-//        System.out.println(SysDepartmentServiceImpl);
+        SysLog sysLog=new SysLog();
+        sysLog.setOperator("aaa");
+        sysLog.setOpertime(new Date());
+        syslogmapper.insert0(sysLog);
+        System.out.println("插入日志");
+
+//        long l1=System.currentTimeMillis();
+        long l1=System.currentTimeMillis();
+        System.out.println("第二次查询日志："+syslogmapper.getLogsPBBySearch(1,1));
+        long l2=System.currentTimeMillis();
+        System.out.println("第二次查询用户："+sysUserService.getUserPBBySearch(null,3,1,null));
+        long l3=System.currentTimeMillis();
+
+        System.out.println("第二次查询日志时间："+(l2-l1));
+        System.out.println("第二次查询用户时间："+(l3-l2));
 
     }
 

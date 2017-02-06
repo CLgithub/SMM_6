@@ -5,7 +5,6 @@
 	xmlns:tx="http://www.springframework.org/schema/tx"
 	xmlns:cache="http://www.springframework.org/schema/cache"
 	xmlns:aop="http://www.springframework.org/schema/aop"
-
 	xsi:schemaLocation="
 	http://www.springframework.org/schema/beans
 	http://www.springframework.org/schema/beans/spring-beans-4.3.xsd
@@ -21,7 +20,7 @@
 
 	<!-- 只扫描@Service和listener @Repository为mybatis的mapper接口，单独处理，@Controller叫给springMVC扫描 -->
 	<context:component-scan base-package="com.cl.smm6.*.serviceimpl,com.cl.smm6.common.listener,test" />
-	
+
 	<!-- 配置通过注释方式注入 -->
 	<context:annotation-config />
 
@@ -52,6 +51,7 @@
     <!--配置ehcacheManager-->
 	<bean id="ehcacheManager" class="org.springframework.cache.ehcache.EhCacheCacheManager" >
 		<property name="cacheManager" ref="ehcacheManagerFactory" />
+        <property name="transactionAware" value="true" />	<!--设置如果事务回滚，缓存也回滚，默认为false-->
 	</bean>
 	<!--启用Spring对基于注解的Cache的支持-->
 	<!--<cache:annotation-driven cache-manager="ehcacheManager" />-->
@@ -63,12 +63,15 @@
         <cache:caching cache="myCache1">
 			<cache:cacheable method="get*" />
 			<cache:cacheable method="load*" />
-			<cache:cacheable method="find*"  />
-			<cache:cache-evict method="save*" all-entries="true" /> <!--清除缓存过于简单粗暴，待改进-->
-			<cache:cache-evict method="update*" all-entries="true" />
-			<cache:cache-evict method="delete*" all-entries="true" />
-			<cache:cache-evict method="new*" all-entries="true" />
-			<cache:cache-evict method="insert*" all-entries="true" />
+			<cache:cacheable method="find*" />
+			<!--清除缓存过于简单粗暴，待改进，改进为只清除同一个service下的方法，但改进没有成功，只能清除同一service下的第一个出现的key
+				就算成功了，也可能造成脏缓存，因为对同一表数据的操作不一定都在该service下-->
+			<cache:cache-evict method="add"  />
+			<cache:cache-evict method="save*"  />
+			<cache:cache-evict method="update*" />
+			<cache:cache-evict method="delete*" />
+			<cache:cache-evict method="new*" />
+			<cache:cache-evict method="insert*" />
 		</cache:caching>
 	</cache:advice>
 
