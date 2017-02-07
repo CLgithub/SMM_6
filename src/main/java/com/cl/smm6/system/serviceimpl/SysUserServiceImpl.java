@@ -2,7 +2,6 @@ package com.cl.smm6.system.serviceimpl;
 
 import com.cl.smm6.common.entity.SysRights;
 import com.cl.smm6.common.entity.SysUser;
-import com.cl.smm6.common.mapper.SysRightsMapper;
 import com.cl.smm6.common.mapper.SysUserMapper;
 import com.cl.smm6.common.mapperbase.BaseMapper;
 import com.cl.smm6.common.servicebase.BaseServiceImpl;
@@ -12,9 +11,7 @@ import com.cl.smm6.common.uitl.PageBean;
 import com.cl.smm6.common.uitl.ValidateUtil;
 import com.cl.smm6.system.service.SysRightsService;
 import com.cl.smm6.system.service.SysUserService;
-import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
-
 import javax.annotation.Resource;
 import java.util.List;
 

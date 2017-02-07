@@ -1,6 +1,5 @@
 package test;
 
-import com.cl.smm6.common.entity.SysLog;
 import com.cl.smm6.common.mapper.SysLogMapper;
 import com.cl.smm6.common.mapper.SysUserMapper;
 import com.cl.smm6.system.service.SysLogService;
@@ -8,7 +7,6 @@ import com.cl.smm6.system.service.SysUserService;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
-import java.util.Date;
 import java.util.List;
 
 /**
@@ -52,11 +50,11 @@ public class Test1 {
         System.out.println("第一次查询日志："+syslogmapper.getLogsPBBySearch(1,1));
         System.out.println("第一次查询用户："+sysUserService.getUserPBBySearch(null,3,1,null));
 
-        SysLog sysLog=new SysLog();
-        sysLog.setOperator("aaa");
-        sysLog.setOpertime(new Date());
-        syslogmapper.insert0(sysLog);
-        System.out.println("插入日志");
+//        SysLog sysLog=new SysLog();
+//        sysLog.setOperator("aaa");
+//        sysLog.setOpertime(new Date());
+//        syslogmapper.insert0(sysLog);
+//        System.out.println("插入日志");
 
 //        long l1=System.currentTimeMillis();
         long l1=System.currentTimeMillis();

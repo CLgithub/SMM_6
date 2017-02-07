@@ -66,12 +66,12 @@
 			<cache:cacheable method="find*" />
 			<!--清除缓存过于简单粗暴，待改进，改进为只清除同一个service下的方法，但改进没有成功，只能清除同一service下的第一个出现的key
 				就算成功了，也可能造成脏缓存，因为对同一表数据的操作不一定都在该service下-->
-			<cache:cache-evict method="add"  />
-			<cache:cache-evict method="save*"  />
-			<cache:cache-evict method="update*" />
-			<cache:cache-evict method="delete*" />
-			<cache:cache-evict method="new*" />
-			<cache:cache-evict method="insert*" />
+			<cache:cache-evict method="add" all-entries="true" />
+			<cache:cache-evict method="save*" all-entries="true"/>
+			<cache:cache-evict method="update*" all-entries="true"/>
+			<cache:cache-evict method="delete*" all-entries="true"/>
+			<cache:cache-evict method="new*" all-entries="true"/>
+			<cache:cache-evict method="insert*" all-entries="true"/>
 		</cache:caching>
 	</cache:advice>
 
