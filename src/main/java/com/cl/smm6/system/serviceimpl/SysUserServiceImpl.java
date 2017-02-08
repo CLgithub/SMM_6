@@ -12,6 +12,7 @@ import com.cl.smm6.common.uitl.ValidateUtil;
 import com.cl.smm6.system.service.SysRightsService;
 import com.cl.smm6.system.service.SysUserService;
 import org.springframework.stereotype.Service;
+
 import javax.annotation.Resource;
 import java.util.List;
 
@@ -91,7 +92,7 @@ public class SysUserServiceImpl extends BaseServiceImpl<SysUser> implements SysU
 	}
 
 	@Override
-	public void test() {
+    public void test() {
 		System.out.println("SysUserServiceImpl.test()");
 	}
 

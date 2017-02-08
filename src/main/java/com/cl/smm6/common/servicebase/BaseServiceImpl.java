@@ -51,7 +51,7 @@ public abstract class BaseServiceImpl<T> implements BaseService<T> {
 
 	public PageBean getPageBean(int currentPage, int pageSize, T t) {
 		Integer total = baseMapper.getAllRow(t);
-		List<Map<?, ?>> rows = baseMapper.getTListBySearch(PageBean.countOffset(pageSize, currentPage), pageSize, t);
+		ArrayList<HashMap> rows = baseMapper.getTListBySearch(PageBean.countOffset(pageSize, currentPage), pageSize, t);
 		PageBean pageBean = new PageBean();
 		pageBean.setTotal(total);
 		pageBean.setRows(rows);

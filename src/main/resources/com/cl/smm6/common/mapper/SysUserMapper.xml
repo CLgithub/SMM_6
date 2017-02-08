@@ -139,7 +139,7 @@
     </select>
 
     <!--查询满足条件的记录-->
-    <resultMap id="resultMap1" type="java.util.Map">
+    <resultMap id="resultMap1" type="java.util.HashMap">
         <id column="id" property="id" jdbcType="INTEGER" />
         <result column="name" property="name" jdbcType="VARCHAR" />
         <result column="loginname" property="loginname" jdbcType="VARCHAR" />
@@ -158,7 +158,6 @@
         </where>
         order by name asc
         LIMIT #{startIndex},#{len}
-
     </select>
 
     <!--根据ids，删除用户-->

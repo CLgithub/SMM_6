@@ -1,14 +1,13 @@
 package com.cl.smm6.system.controller;
 
-import javax.annotation.Resource;
-import javax.servlet.http.HttpServletRequest;
-
+import com.cl.smm6.common.entity.SysUser;
+import com.cl.smm6.system.service.SysUserService;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.cl.smm6.common.entity.SysUser;
-import com.cl.smm6.system.service.SysUserService;
+import javax.annotation.Resource;
+import javax.servlet.http.HttpSession;
 
 /**
  * 用户控制类
@@ -33,8 +32,8 @@ public class SysUserController {
 	 */
 	@RequestMapping(value = "getPBBySearch")
 	@ResponseBody
-	public Object getPBBySearch(HttpServletRequest request, Integer page, Integer rows, String searchWhere) {
-		SysUser sysUser = (SysUser) request.getSession().getAttribute("sysUser");
+	public Object getPBBySearch(HttpSession session, Integer page, Integer rows, String searchWhere) {
+		SysUser sysUser = (SysUser) session.getAttribute("sysUser");
 		return sysUserService.getUserPBBySearch(sysUser, page, rows, searchWhere);
 	}
 

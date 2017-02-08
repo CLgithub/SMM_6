@@ -2,8 +2,8 @@ package com.cl.smm6.common.mapperbase;
 
 import org.apache.ibatis.annotations.Param;
 
-import java.util.List;
-import java.util.Map;
+import java.util.ArrayList;
+import java.util.HashMap;
 
 public interface BaseMapper<T> {
 
@@ -51,6 +51,6 @@ public interface BaseMapper<T> {
 	 * @param t 查询条件
 	 * @return 放回listMap
 	 */
-	List<Map<?, ?>> getTListBySearch(@Param("startIndex")Integer startIndex, @Param("len")Integer len, @Param("t")T t);
+	ArrayList<HashMap> getTListBySearch(@Param("startIndex")Integer startIndex, @Param("len")Integer len, @Param("t")T t);
 
 }

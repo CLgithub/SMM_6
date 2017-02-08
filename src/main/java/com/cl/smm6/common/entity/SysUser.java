@@ -89,4 +89,5 @@ public class SysUser extends BaseEntity {
 		long ret = rightSum[pos] & code;
 		return !(ret == 0);
 	}
+
 }

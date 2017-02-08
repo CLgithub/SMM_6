@@ -1,12 +1,11 @@
 package com.cl.smm6.system.service;
 
-import javax.jws.WebService;
-
 import com.cl.smm6.common.entity.SysUser;
 import com.cl.smm6.common.servicebase.BaseService;
 import com.cl.smm6.common.uitl.PageBean;
+import javax.jws.WebService;
 
-//@WebService
+@WebService
 public interface SysUserService extends BaseService<SysUser> {
 
 	/**

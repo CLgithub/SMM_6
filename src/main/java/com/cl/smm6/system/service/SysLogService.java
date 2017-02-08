@@ -4,6 +4,9 @@ import com.cl.smm6.common.entity.SysLog;
 import com.cl.smm6.common.servicebase.BaseService;
 import com.cl.smm6.common.uitl.PageBean;
 
+import javax.jws.WebService;
+
+@WebService
 public interface SysLogService extends BaseService<SysLog> {
 
 	/**
